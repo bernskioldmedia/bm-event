@@ -2,6 +2,7 @@
 
 namespace BernskioldMedia\WP\Event;
 
+use BernskioldMedia\WP\Block_Plugin_Support\Traits\Has_Blocks;
 use BernskioldMedia\WP\Event\Data_Stores\Session;
 use BernskioldMedia\WP\Event\Data_Stores\Speaker;
 use BernskioldMedia\WP\Event\Data_Stores\Track;
@@ -14,6 +15,8 @@ defined( 'ABSPATH' ) || exit;
  * @package BernskioldMedia\WP\Event
  */
 class Plugin {
+
+	use Has_Blocks;
 
 	/**
 	 * Version
@@ -113,8 +116,25 @@ class Plugin {
 	 */
 	private function init_hooks(): void {
 		add_action( 'init', [ self::class, 'load_languages' ] );
+		add_filter( 'block_categories', [ self::class, 'setup_block_categories' ] );
 
 		do_action( 'bm_event_init' );
+	}
+
+	/**
+	 * Setup Block Categories
+	 *
+	 * @param  array  $categories
+	 *
+	 * @return array
+	 */
+	public static function setup_block_categories( $categories ): array {
+		return array_merge( $categories, [
+			[
+				'slug'  => 'event',
+				'title' => __( 'Event Related', 'bm-block-library' ),
+			],
+		] );
 	}
 
 	/**
@@ -216,4 +236,12 @@ class Plugin {
 		return self::DATABASE_VERSION;
 	}
 
+	/**
+	 * Place the logic where you add blocks in here.
+	 *
+	 * @return mixed
+	 */
+	public function blocks() {
+		// TODO: Implement blocks() method.
+	}
 }
