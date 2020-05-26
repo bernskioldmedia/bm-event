@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "13b1beabb7d9ff04c98a279e6db37a4a",
+    "content-hash": "6f88cd5032f769be4d158df8a4ea2d33",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -216,6 +216,46 @@
                 "testing"
             ],
             "time": "2019-12-22T17:52:09+00:00"
+        },
+        {
+            "name": "bernskioldmedia/block-plugin-support",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bernskioldmedia/Block-Plugin-Support.git",
+                "reference": "f9c0ce8c7c9c47a4f052a3bc8e9c247f576705ec"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bernskioldmedia/Block-Plugin-Support/zipball/f9c0ce8c7c9c47a4f052a3bc8e9c247f576705ec",
+                "reference": "f9c0ce8c7c9c47a4f052a3bc8e9c247f576705ec",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BernskioldMedia\\WP\\Block_Plugin_Support\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Bernskiold Media",
+                    "email": "info@bernskioldmedia.com"
+                },
+                {
+                    "name": "Erik Bernskiold",
+                    "email": "erik@bernskioldmedia.com"
+                }
+            ],
+            "description": "A reusable way of adding block support to a WordPress plugin.",
+            "time": "2020-04-25T14:48:30+00:00"
         },
         {
             "name": "bernskioldmedia/phpcs-wordpress",
