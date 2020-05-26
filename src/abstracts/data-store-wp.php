@@ -49,13 +49,22 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	public function __construct() {
 		add_action( 'init', [ static::class, 'register' ], 10 );
 		add_action( 'bm_event_install', [ static::class, 'register' ] );
+
+		if ( method_exists( static::class, 'fields' ) ) {
+			add_action( 'acf/init', [ static::class, 'fields' ] );
+		}
+
+		if ( method_exists( static::class, 'admin_columns' ) ) {
+			add_action( 'ac/ready', [ static::class, 'admin_columns' ] );
+		}
+
 	}
 
 	/**
 	 * Create an item.
 	 *
-	 * @param  string $name
-	 * @param  array  $args
+	 * @param  string  $name
+	 * @param  array   $args
 	 *
 	 * @return int
 	 */
@@ -64,8 +73,8 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	/**
 	 * Update an item with new values.
 	 *
-	 * @param  int          $object_id
-	 * @param  array|string $args
+	 * @param  int           $object_id
+	 * @param  array|string  $args
 	 *
 	 * @return int
 	 */
@@ -74,8 +83,8 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	/**
 	 * Delete an item.
 	 *
-	 * @param  int  $object_id
-	 * @param  bool $force_delete
+	 * @param  int   $object_id
+	 * @param  bool  $force_delete
 	 *
 	 * @return bool
 	 */
@@ -102,8 +111,8 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	/**
 	 * Adds key to the capability.
 	 *
-	 * @param  string $capability
-	 * @param  bool   $plural
+	 * @param  string  $capability
+	 * @param  bool    $plural
 	 *
 	 * @return string
 	 */
@@ -119,7 +128,7 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 	/**
 	 * Add permissions to roles.
 	 *
-	 * @param  array $permissions
+	 * @param  array  $permissions
 	 */
 	protected static function add_permissions_to_roles( array $permissions ): void {
 
