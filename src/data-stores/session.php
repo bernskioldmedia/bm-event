@@ -86,7 +86,7 @@ class Session extends Abstracts\Custom_Post_Type {
 			'show_ui'             => true,
 			'show_in_menu'        => true, // Set this to string to make sub-page.
 			'menu_position'       => 20,
-			'menu_icon'           => 'dashicons-calendar-alt',
+			'menu_icon'           => 'dashicons-schedule',
 			'show_in_admin_bar'   => true,
 			'show_in_nav_menus'   => true,
 			'can_export'          => true,
