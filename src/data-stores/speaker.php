@@ -100,6 +100,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 			'delete_with_user'    => null,
 			'show_in_rest'        => true, // Required for Gutenberg.
 			'capabilities'        => self::get_capabilities(),
+			'map_meta_cap'        => true,
 		];
 
 		register_post_type( self::get_key(), $args );
