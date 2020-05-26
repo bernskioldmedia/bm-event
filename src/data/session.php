@@ -25,17 +25,17 @@ class Session extends Data {
 	 *
 	 * @return string
 	 */
-	public function get_title() {
+	public function get_title(): string {
 		return get_the_title( $this->get_id() );
 	}
 
 	/**
-	 * Get session label.
+	 * Get session topic.
 	 *
 	 * @return string|null
 	 */
-	public function get_label(): ?string {
-		return $this->get_prop( 'session_label' );
+	public function get_topic(): ?string {
+		return $this->get_prop( 'session_topic' );
 	}
 
 	/**

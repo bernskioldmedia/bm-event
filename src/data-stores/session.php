@@ -118,8 +118,8 @@ class Session extends Abstracts\Custom_Post_Type {
 			'fields'                => [
 				[
 					'key'               => 'field_5ecd10d06e764',
-					'label'             => __( 'Label', 'bm-event' ),
-					'name'              => 'session_label',
+					'label'             => __( 'Topic', 'bm-event' ),
+					'name'              => 'session_topic',
 					'type'              => 'text',
 					'instructions'      => '',
 					'required'          => 0,
