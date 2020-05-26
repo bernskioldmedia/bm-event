@@ -1,0 +1,225 @@
+# Copyright (C) 2020 Bernskiold Media
+# This file is distributed under the same license as the BM Event package.
+msgid ""
+msgstr ""
+"Project-Id-Version: BM Event 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/bm-event\n"
+"POT-Creation-Date: 2020-05-26 11:56:59+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2020-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: node-wp-i18n 1.2.3\n"
+
+#: src/data-stores/cpt.php:48 src/data-stores/cpt.php:49
+#: src/data-stores/cpt.php:50 src/data-stores/cpt.php:81
+msgid "Examples"
+msgstr ""
+
+#: src/data-stores/cpt.php:51
+msgid "Parent Example:"
+msgstr ""
+
+#: src/data-stores/cpt.php:52
+msgid "All Examples"
+msgstr ""
+
+#: src/data-stores/cpt.php:53
+msgid "Add New Example"
+msgstr ""
+
+#: src/data-stores/cpt.php:54
+msgid "Add New"
+msgstr ""
+
+#: src/data-stores/cpt.php:55
+msgid "New Example"
+msgstr ""
+
+#: src/data-stores/cpt.php:56
+msgid "Edit Example"
+msgstr ""
+
+#: src/data-stores/cpt.php:57
+msgid "Update Example"
+msgstr ""
+
+#: src/data-stores/cpt.php:58
+msgid "View Example"
+msgstr ""
+
+#: src/data-stores/cpt.php:59
+msgid "Search Example"
+msgstr ""
+
+#: src/data-stores/cpt.php:60
+msgid "Not found"
+msgstr ""
+
+#: src/data-stores/cpt.php:61
+msgid "Not found in Trash"
+msgstr ""
+
+#: src/data-stores/cpt.php:62
+msgid "Featured Image"
+msgstr ""
+
+#: src/data-stores/cpt.php:63
+msgid "Set Featured Image"
+msgstr ""
+
+#: src/data-stores/cpt.php:64
+msgid "Remove Featured Image"
+msgstr ""
+
+#: src/data-stores/cpt.php:65
+msgid "Use as Featured Image"
+msgstr ""
+
+#: src/data-stores/cpt.php:66
+msgid "Insert into example"
+msgstr ""
+
+#: src/data-stores/cpt.php:67
+msgid "Uploaded to this example"
+msgstr ""
+
+#: src/data-stores/cpt.php:68
+msgid "Examples list"
+msgstr ""
+
+#: src/data-stores/cpt.php:69
+msgid "Examples list navigation"
+msgstr ""
+
+#: src/data-stores/cpt.php:70
+msgid "Filter examples list"
+msgstr ""
+
+#: src/data-stores/cpt.php:71
+msgid "Attributes"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:56
+msgid "Types"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:57
+msgid "All Types"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:58
+msgid "Parent Type"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:59
+msgid "Parent Type:"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:60
+msgid "New Type Name"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:61
+msgid "Add New Type"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:62
+msgid "Edit Type"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:63
+msgid "Update Type"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:64
+msgid "View Type"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:65
+msgid "Separate types with commas"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:66
+msgid "Add or remove types"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:67
+msgid "Choose from the most used"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:68
+msgid "Popular Types"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:69
+msgid "Search Types"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:70
+msgid "Not Found"
+msgstr ""
+
+#: vendor/10up/wp_mock/tests/FunctionMocksTest.php:65
+msgid "Test"
+msgstr ""
+
+#: vendor/10up/wp_mock/tests/FunctionMocksTest.php:75
+#: vendor/10up/wp_mock/tests/FunctionMocksTest.php:77
+msgid "Input"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "BM Event"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://bernskioldmedia.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Functionality to help you market and manage an event. From showing speakers "
+"to a live agenda for one or multiple days."
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Bernskiold Media"
+msgstr ""
+
+#: src/data-stores/cpt.php:46
+msgctxt "Post Type General Name"
+msgid "Examples"
+msgstr ""
+
+#: src/data-stores/cpt.php:47
+msgctxt "Post Type Singular Name"
+msgid "Example"
+msgstr ""
+
+#: src/data-stores/cpt.php:93
+msgctxt "examples post type archive slug"
+msgid "example"
+msgstr ""
+
+#: src/data-stores/cpt.php:95
+msgctxt "examples post type single slug"
+msgid "example"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:54
+msgctxt "Taxonomy General Name"
+msgid "Types"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:55
+msgctxt "Taxonomy Singular Name"
+msgid "Type"
+msgstr ""
+
+#: src/data-stores/taxonomy.php:86
+msgctxt "types taxonomy slug "
+msgid "types"
+msgstr ""
