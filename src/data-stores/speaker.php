@@ -75,6 +75,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 			'title',
 			'editor',
 			'revisions',
+			'thumbnail',
 		];
 
 		$args = [
