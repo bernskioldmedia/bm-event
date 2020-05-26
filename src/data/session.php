@@ -141,7 +141,7 @@ class Session extends Data {
 	/**
 	 * Get the speakers (with objects) associated with this session.
 	 *
-	 * @return array|null
+	 * @return Speaker[]|null
 	 */
 	public function get_speakers(): ?array {
 		$ids = $this->get_speaker_ids();
