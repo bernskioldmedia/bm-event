@@ -107,4 +107,214 @@ class Session extends Abstracts\Custom_Post_Type {
 
 	}
 
+	/**
+	 * Meta Fields via Advanced Custom Fields
+	 */
+	public static function fields(): void {
+
+		acf_add_local_field_group( [
+			'key'                   => 'group_5ecd0f226b78d',
+			'title'                 => __( 'Information', 'bm-event' ),
+			'fields'                => [
+				[
+					'key'               => 'field_5ecd10d06e764',
+					'label'             => __( 'Label', 'bm-event' ),
+					'name'              => 'session_label',
+					'type'              => 'text',
+					'instructions'      => '',
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'default_value'     => '',
+					'placeholder'       => '',
+					'prepend'           => '',
+					'append'            => '',
+					'maxlength'         => '',
+				],
+				[
+					'key'               => 'field_5ecd0f392473a',
+					'label'             => __( 'Short Description', 'bm-event' ),
+					'name'              => 'session_short_description',
+					'type'              => 'textarea',
+					'instructions'      => '',
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'default_value'     => '',
+					'placeholder'       => '',
+					'maxlength'         => '',
+					'rows'              => 3,
+					'new_lines'         => '',
+				],
+				[
+					'key'               => 'field_5ecd10648a355',
+					'label'             => __( 'Session Type', 'bm-event' ),
+					'name'              => 'session_type',
+					'type'              => 'radio',
+					'instructions'      => '',
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'choices'           => [
+						'session' => _x( 'Session', 'a type of session', 'bm-event' ),
+						'break'   => _x( 'Break', 'a type of session', 'bm-event' ),
+					],
+					'allow_null'        => 0,
+					'other_choice'      => 0,
+					'default_value'     => 'session',
+					'layout'            => 'horizontal',
+					'return_format'     => 'array',
+					'save_other_choice' => 0,
+				],
+			],
+			'location'              => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => self::get_key(),
+					],
+				],
+			],
+			'menu_order'            => 0,
+			'position'              => 'side',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => __( 'Information about a session.', 'bm-event' ),
+		] );
+
+		acf_add_local_field_group( [
+			'key'                   => 'group_5ecd095bf2280',
+			'title'                 => __( 'Date & Time', 'bm-event' ),
+			'fields'                => [
+				[
+					'key'               => 'field_5ecd0e50cafde',
+					'label'             => __( 'Date', 'bm-event' ),
+					'name'              => 'session_date',
+					'type'              => 'date_picker',
+					'instructions'      => '',
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'display_format'    => 'Y-m-d',
+					'return_format'     => 'Ymd',
+					'first_day'         => 1,
+				],
+				[
+					'key'               => 'field_5ecd0e68cafdf',
+					'label'             => __( 'Start Time', 'bm-event' ),
+					'name'              => 'session_start_time',
+					'type'              => 'time_picker',
+					'instructions'      => '',
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'display_format'    => 'H:i',
+					'return_format'     => 'H:i',
+				],
+				[
+					'key'               => 'field_5ecd0e89cafe0',
+					'label'             => __( 'End Time', 'bm-event' ),
+					'name'              => 'session_end_time',
+					'type'              => 'time_picker',
+					'instructions'      => '',
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'display_format'    => 'H:i',
+					'return_format'     => 'H:i',
+				],
+			],
+			'location'              => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => self::get_key(),
+					],
+				],
+			],
+			'menu_order'            => 5,
+			'position'              => 'side',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => __( 'Information about the session date and time.', 'bm-event' ),
+		] );
+
+		acf_add_local_field_group( [
+			'key'                   => 'group_5ecd0e94b7e60',
+			'title'                 => __( 'Speaker(s)', 'bm-event' ),
+			'fields'                => [
+				[
+					'key'               => 'field_5ecd0e9a7f672',
+					'label'             => __( 'Speaker(s)', 'bm-event' ),
+					'name'              => 'session_speakers_ids',
+					'type'              => 'post_object',
+					'instructions'      => '',
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'post_type'         => Speaker::get_key(),
+					'taxonomy'          => '',
+					'allow_null'        => 0,
+					'multiple'          => 1,
+					'return_format'     => 'id',
+					'ui'                => 1,
+				],
+			],
+			'location'              => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => self::get_key(),
+					],
+				],
+			],
+			'menu_order'            => 10,
+			'position'              => 'side',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => __( 'Select speakers for sessions.', 'bm-event' ),
+		] );
+
+	}
+
 }
