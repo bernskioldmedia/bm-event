@@ -10,36 +10,48 @@ import Inspector from './inspector';
 /**
  * WordPress Dependencies
  */
-const { __ }                        = wp.i18n;
-const { apiFetch }                  = wp;
-const { withSelect, registerStore } = wp.data;
-const { Fragment, Component }       = wp.element;
-const { Placeholder, Spinner }      = wp.components;
+const { __ }                                  = wp.i18n;
+const { apiFetch }                            = wp;
+const { withSelect, registerStore }           = wp.data;
+const { Fragment, Component }                 = wp.element;
+const { Placeholder, Spinner, SelectControl } = wp.components;
 
 /**
  * Initial State
  *
- * @type {{events: {}}}
+ * @type {{sessions: {}}}
  */
 const DEFAULT_STATE = {
-	events: {},
+	sessions: {},
 };
 
 /**
  * Actions for the selection
  *
- * @type {{setEvents(*): *, receiveEvents(*): *}}
+ * @type {{setSessions(*): *, receiveSessions(*): *}}
  */
 const actions = {
-	setEvents( events ) {
+	setSessions( sessions ) {
 		return {
-			type: 'SET_EVENTS',
-			events,
+			type: 'SET_SESSIONS',
+			sessions,
 		};
 	},
-	receiveEvents( path ) {
+	receiveSessions( path ) {
 		return {
-			type: 'RECIEVE_EVENTS',
+			type: 'RECIEVE_SESSIONS',
+			path,
+		};
+	},
+	setTracks( tracks ) {
+		return {
+			type: 'SET_TRACKS',
+			tracks,
+		};
+	},
+	receiveTracks( path ) {
+		return {
+			type: 'RECIEVE_TRACKS',
 			path,
 		};
 	},
@@ -47,16 +59,21 @@ const actions = {
 
 /**
  * Register custom store for getting and setting the
- * secondary events.
+ * sessions.
  */
-registerStore( 'bm/upcoming-events', {
+registerStore( 'bm/track-timetable', {
 		reducer( state = DEFAULT_STATE, action ) {
 
 			switch ( action.type ) {
-				case 'SET_EVENTS':
+				case 'SET_SESSIONS':
 					return {
 						...state,
-						events: action.events,
+						sessions: action.sessions,
+					};
+				case 'SET_TRACKS':
+					return {
+						...state,
+						tracks: action.tracks,
 					};
 			}
 
@@ -67,23 +84,33 @@ registerStore( 'bm/upcoming-events', {
 		actions,
 
 		selectors: {
-			getEvents( state ) {
-				const { events } = state;
-				return events;
+			getSessions( state ) {
+				const { sessions } = state;
+				return sessions;
+			},
+			getTracks( state ) {
+				const { tracks } = state;
+				return tracks;
 			}
 		},
 
 		controls: {
-			RECIEVE_EVENTS( action
-			) {
+			RECIEVE_SESSIONS( action ) {
+				return apiFetch( { path: action.path } );
+			},
+			RECIEVE_TRACKS( action ) {
 				return apiFetch( { path: action.path } );
 			}
 		},
 
 		resolvers: {
-			* getEvents( params = '' ) {
-				const events = yield actions.receiveEvents( '/tribe/events/v1/events' + params );
-				return actions.setEvents( events );
+			* getSessions( params = '' ) {
+				const sessions = yield actions.receiveSessions( '/wp/v2/session' + params );
+				return actions.setSessions( sessions );
+			},
+			* getTracks( params = '' ) {
+				const tracks = yield actions.receiveTracks( '/wp/v2/track' + params );
+				return actions.setTracks( tracks );
 			}
 		},
 
@@ -91,94 +118,135 @@ registerStore( 'bm/upcoming-events', {
 );
 
 /**
- * Upcoming Events Block: Edit Logic
+ * Track Timetable Block: Edit Logic
  */
-class UpcomingEventsEdit extends Component {
+class Edit extends Component {
 
 	constructor() {
 		super( ...arguments );
 	}
 
 	/**
-	 * Retrieve events from the API via the
+	 * Retrieve sessions from the API via the
 	 * withSelect helper.
 	 *
 	 * @returns {Array}
 	 */
-	getEvents() {
-		const events = this.props.events;
+	getSessions() {
+		const sessions = this.props.sessions;
 
-		if ( ! events.events || ! events.events.length ) {
+		if ( ! sessions || ! sessions.length ) {
 			return [];
 		}
 
-		return events.events;
+		return sessions;
+	}
+
+	getTracksForSelect() {
+		const tracks = this.props.tracks;
+
+		if ( ! tracks || ! tracks.length ) {
+			return [];
+		}
+
+		return [
+			{
+				value: 0,
+				label: __( 'Select a track...', 'bm-block-track-timetable' )
+			},
+		].concat( tracks.map( ( track ) => {
+			return {
+				value: track.id,
+				label: track.name
+			};
+		} ) );
 	}
 
 	/**
-	 * Render a single event based on the event data.
+	 * Render a single track based on the track data.
 	 *
-	 * @param event
+	 * @param session
 	 * @returns {*}
 	 */
-	renderEvent( event ) {
+	renderSession( session ) {
 
-		const getDate = () => {
-			const startDate = event.start_date_details;
-			const endDate   = event.end_date_details;
-
-			if ( ( startDate.month === endDate.month ) && ( startDate.day !== endDate.day ) ) {
-				return `${startDate.day}-${endDate.day}/${endDate.month}`;
-			} else if ( endDate.day && endDate.month && ( startDate.day !== endDate.day ) ) {
-				return `${startDate.day}/${startDate.month} - ${endDate.day}/${endDate.month}`;
-			} else {
-				return `${startDate.day}/${startDate.month}`;
-			}
-
-		};
+		const { id, title, start_time, end_time, topic, short_description, speakers } = session;
 
 		return (
-			<div className="upcoming-event-item" key={event.id.toString()}>
-				<a href="#" className="upcoming-event-item-link">
-					<div className="upcoming-event-item-date">
-						{getDate()}
-					</div>
-					<h3 className="upcoming-event-item-title">
-						{event.title}
-					</h3>
-				</a>
+			<div className="session-list-item" id={`session-${id.toString()}`} key={id.toString()}>
+				<div className="session-list-item-time">
+
+					{start_time && (
+						<time className="session-list-item-time-start">
+							{start_time}
+						</time>
+					)}
+
+					{end_time && (
+						<>
+							<span className="session-list-item-time-separator"></span>
+							<time className="session-list-item-time-end">
+								{end_time}
+							</time>
+						</>
+					)}
+
+				</div>
+				<div className="session-list-item-info">
+
+					<h3 className="session-list-item-title">{title.rendered}</h3>
+
+					{topic && (
+						<p className="session-list-item-topic">{topic}</p>
+					)}
+
+					{short_description && (
+						<p className="session-list-item-short-description">
+							{short_description}
+						</p>
+					)}
+
+					{speakers && (
+						<div className="session-list-item-speakers">
+							{speakers.map( ( speaker ) => (
+								<div className="speaker">
+									<p className="speaker-name">{speaker.name}</p>
+
+									{speaker.title && (
+										<p className="speaker-title">{speaker.title}</p>
+									)}
+								</div>
+							) )}
+						</div>
+					)}
+
+				</div>
 			</div>
 		);
 
 	}
 
 	/**
-	 * Map the render event function to the list of events
-	 * from the API to render all the events for the block.
+	 * Map the render event function to the list of sessions
+	 * from the API to render all the sessions for the block.
 	 *
 	 * @returns {*}
 	 */
-	renderEvents() {
+	renderSessions() {
 
 		const { className, attributes } = this.props;
 
-		const events = this.getEvents();
+		const sessions = this.getSessions();
 
-		const classes = classnames( 'upcoming-events', {
+		console.log( sessions );
+
+		const classes = classnames( 'track-timetable', {
 			[className]: className,
 		} );
 
 		return (
-			<div className="section-body">
-				<div className={classes}>
-					{'small' === attributes.style ? events.map( ( event ) => this.renderEvent( event ) ) : (
-						<Placeholder
-							icon="admin-post"
-							label={__( 'No Live Preview', 'bm-block-upcoming-events' )}
-							instructions={__( 'This view does not have a live preview in the editor. To see how this block will look, please save and preview the page.', 'bm-block-upcoming-events' )}
-						/>
-					)}
-				</div>
+			<div className={classes}>
+				{sessions.map( ( session ) => this.renderSession( session ) )}
 			</div>
 		);
 	}
@@ -190,7 +258,29 @@ class UpcomingEventsEdit extends Component {
 	 */
 	render() {
 
-		const { isRequesting } = this.props;
+		const { isRequesting, attributes, setAttributes } = this.props;
+
+		if ( 0 === attributes.track_id ) {
+			return (
+				<>
+					<Inspector {...this.props} />
+					<Placeholder
+						icon="admin-post"
+						label={__( 'Select A Track', 'bm-block-track-timetable' )}
+						instructions={__( 'Select the track you want to display the timetable for.', 'bm-block-track-timetable' )}
+						isColumnLayout={true}
+					>
+						<SelectControl
+							label={__( 'Select a track', 'bm-block-track-timetable' )}
+							onChange={( value ) => {
+								setAttributes( { track_id: parseInt( value ) } );
+							}}
+							options={this.getTracksForSelect()}
+						/>
+					</Placeholder>
+				</>
+			);
+		}
 
 		/**
 		 * If we are still fetching data from the API,
@@ -216,9 +306,7 @@ class UpcomingEventsEdit extends Component {
 		 */
 		return (
 			<Fragment>
-
-				{this.renderEvents()}
-
+				{this.renderSessions()}
 			</Fragment>
 		);
 	}
@@ -236,30 +324,18 @@ export default withSelect( ( select, props ) => {
 
 	const { attributes } = props;
 
-	const events = select( 'bm/upcoming-events' );
-
-	const today = new Date().toISOString().slice( 0, 10 );
+	const store = select( 'bm/track-timetable' );
 
 	let query = {
-		per_page: attributes.amount,
-		start_date: today,
+		per_page: 100, // More than enough for "everything".
+		track: attributes.track_id,
 	};
-
-	if ( attributes.inCategories && attributes.inCategories.length > 0 ) {
-		query.categories = attributes.inCategories.join( ',' );
-	}
-
-	if ( attributes.inTags && attributes.inTags.length > 0 ) {
-		query.tags = attributes.inTags.join( ',' );
-	}
 
 	const params = '?' + Object.keys( query ).map( k => `${encodeURIComponent( k )}=${encodeURIComponent( query[k] )}` ).join( '&' );
 
 	return {
-		/**
-		 * Get the events
-		 */
-		events: events.getEvents( params ),
+		sessions: attributes.track_id ? store.getSessions( params ) : [],
+		tracks: store.getTracks( '?per_page=50' ),
 	};
 
-} )( UpcomingEventsEdit );
+} )( Edit );

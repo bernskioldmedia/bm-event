@@ -1,7 +1,12 @@
 {
     "/assets/scripts/dist/admin-app.js": "/assets/scripts/dist/admin-app.js",
+    "/assets/scripts/dist/admin-app.js.map": "/assets/scripts/dist/admin-app.js.map",
     "/assets/scripts/dist/app.js": "/assets/scripts/dist/app.js",
     "/assets/styles/dist/app.css": "/assets/styles/dist/app.css",
     "/assets/styles/dist/admin.css": "/assets/styles/dist/admin.css",
-    "/assets/styles/dist/app-ie11.css": "/assets/styles/dist/app-ie11.css"
+    "/assets/scripts/dist/app.js.map": "/assets/scripts/dist/app.js.map",
+    "/assets/styles/dist/app.css.map": "/assets/styles/dist/app.css.map",
+    "/assets/styles/dist/admin.css.map": "/assets/styles/dist/admin.css.map",
+    "/dist/track-timetable.js": "/dist/track-timetable.js",
+    "/dist/track-timetable.js.map": "/dist/track-timetable.js.map"
 }

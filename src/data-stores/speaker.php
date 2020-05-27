@@ -35,6 +35,15 @@ class Speaker extends Abstracts\Custom_Post_Type {
 	protected static $plural_key = 'speakers';
 
 	/**
+	 * @var string[]
+	 */
+	public static $metadata = [
+		'name',
+		'first_name',
+		'last_name',
+	];
+
+	/**
 	 * Register Post Type
 	 *
 	 * @see https://codex.wordpress.org/Function_Reference/register_post_type

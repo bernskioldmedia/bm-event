@@ -35,6 +35,29 @@ class Session extends Abstracts\Custom_Post_Type {
 	protected static $plural_key = 'sessions';
 
 	/**
+	 * Class name of the data class.
+	 *
+	 * @var string
+	 */
+	protected static $data_class = \BernskioldMedia\WP\Event\Data\Session::class;
+
+	/**
+	 * Array of metadata (field) keys.
+	 *
+	 * @var array
+	 */
+	public static $metadata = [
+		'name',
+		'topic',
+		'short_description',
+		'session_type',
+		'date',
+		'start_time',
+		'end_time',
+		'speakers',
+	];
+
+	/**
 	 * Register Post Type
 	 *
 	 * @see https://codex.wordpress.org/Function_Reference/register_post_type

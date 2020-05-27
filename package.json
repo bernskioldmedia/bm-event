@@ -14,7 +14,7 @@
     "setup": "composer install && npm install && npm run build",
     "build": "npm run prod && npm run i18n",
     "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
-    "watch": "npm run development -- --watch",
+    "watch": "npm run dev -- --watch",
     "prod": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "lint": "npm run lint:styles && npm run lint:scripts && npm run lint:php",
     "lint:styles": "cross-env stylelint './assets/styles/src/**/*.scss' --syntax scss",
@@ -41,6 +41,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/preset-react": "^7.10.0",
     "@wordpress/eslint-plugin": "^4.1",
     "babel-preset-react": "^6.24",
     "browser-sync": "^2.26",
@@ -58,19 +59,22 @@
     "eslint-plugin-react": "^7.19",
     "eslint-plugin-react-hooks": "^2.5",
     "husky": "^3.1",
-    "lint-staged": "^9.5.0",
     "laravel-mix": "^5.0",
+    "lint-staged": "^9.5.0",
     "node-wp-i18n": "^1.2",
     "postcss-custom-properties": "^9.1",
     "postcss-preset-env": "^6.7",
+    "prettier": "^2.0",
     "sass": "^1.26",
     "sass-loader": "^8.0",
-    "prettier": "^2.0",
     "stylelint": "^9.10",
     "stylelint-config-wordpress": "^14.0",
     "stylelint-declaration-use-variable": "^1.7",
     "stylelint-order": "^2.2",
     "stylelint-webpack-plugin": "^1.1",
     "vue-template-compiler": "^2.6"
+  },
+  "dependencies": {
+    "classnames": "^2.2.6"
   }
 }

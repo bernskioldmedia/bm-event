@@ -21,6 +21,13 @@ defined( 'ABSPATH' ) || exit;
 class Speaker extends Data {
 
 	/**
+	 * Reference to the data store.
+	 *
+	 * @var string
+	 */
+	protected static $data_store = \BernskioldMedia\WP\Event\Data_Stores\Speaker::class;
+
+	/**
 	 * Get Name
 	 *
 	 * @return string|null

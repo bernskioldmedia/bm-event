@@ -3,6 +3,7 @@
 namespace BernskioldMedia\WP\Event;
 
 use BernskioldMedia\WP\Block_Plugin_Support\Traits\Has_Blocks;
+use BernskioldMedia\WP\Event\Blocks\Track_Timetable\Track_Timetable_Block;
 use BernskioldMedia\WP\Event\Data_Stores\Session;
 use BernskioldMedia\WP\Event\Data_Stores\Speaker;
 use BernskioldMedia\WP\Event\Data_Stores\Track;
@@ -58,13 +59,6 @@ class Plugin {
 	];
 
 	/**
-	 * REST Endpoints
-	 *
-	 * @var array
-	 */
-	public static $rest_endpoints = [];
-
-	/**
 	 * Plugin Instantiator
 	 *
 	 * @return object
@@ -106,6 +100,7 @@ class Plugin {
 
 		$this->loaders();
 		$this->init_hooks();
+		$this->load_blocks( 'bm' );
 
 		do_action( 'after_bm_event_loaded' );
 
@@ -164,11 +159,6 @@ class Plugin {
 		// Data Stores.
 		foreach ( self::$data_stores as $data_store ) {
 			new $data_store();
-		}
-
-		// REST Endpoints.
-		foreach ( self::$rest_endpoints as $endpoint ) {
-			( new $endpoint() )->load();
 		}
 
 	}
@@ -242,6 +232,11 @@ class Plugin {
 	 * @return mixed
 	 */
 	public function blocks() {
-		// TODO: Implement blocks() method.
+
+		$this->add_block( 'track-timetable', [
+			'render_callback' => [ Track_Timetable_Block::class, 'render' ],
+			'attributes'      => Track_Timetable_Block::get_attributes(),
+		] );
+
 	}
 }

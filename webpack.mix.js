@@ -10,7 +10,7 @@
  * @author  Bernskiold Media <info@bernskioldmedia.com>
  **/
 
-const mix = require( "laravel-mix" );
+const mix = require( 'laravel-mix' );
 
 /**************************************************************
  * Build Process
@@ -23,10 +23,10 @@ const mix = require( "laravel-mix" );
  * Asset Directory Path
  */
 const assetPaths = {
-	scripts: "assets/scripts",
-	styles: "assets/styles",
-	images: "assets/images",
-	fonts: "assets/fonts"
+	scripts: 'assets/scripts',
+	styles: 'assets/styles',
+	images: 'assets/images',
+	fonts: 'assets/fonts'
 };
 
 /*
@@ -37,11 +37,11 @@ const assetPaths = {
 mix.options( {
 	processCssUrls: false,
 	postCss: [
-		require( "postcss-preset-env" )( {
+		require( 'postcss-preset-env' )( {
 			stage: 3,
 			browsers: [
-				"> 1%",
-				"last 2 versions"
+				'> 1%',
+				'last 2 versions'
 			]
 		} )
 	]
@@ -69,6 +69,13 @@ mix.js(
 	   `${assetPaths.scripts}/dist/admin-app.js`
    );
 
+
+/**
+ * Block Editor Blocks
+ */
+mix
+	.react( `src/blocks/track-timetable/track-timetable.js`, `dist` );
+
 /**
  * Vendor JavaScript
  */
@@ -86,7 +93,7 @@ mix.js(
  */
 const sassConfig = {
 	sassOptions: {
-		outputStyle: "compressed"
+		outputStyle: 'compressed'
 	}
 };
 
@@ -109,13 +116,13 @@ if ( mix.inProduction() ) {
 		`${assetPaths.styles}/dist`,
 		sassConfig,
 		[
-			require( "postcss-custom-properties" )(),
-			require( "postcss-preset-env" )( {
+			require( 'postcss-custom-properties' )(),
+			require( 'postcss-preset-env' )( {
 				stage: 4,
 				browsers: [
-					"> 1%",
-					"last 2 versions",
-					"ie >= 11"
+					'> 1%',
+					'last 2 versions',
+					'ie >= 11'
 				],
 				autoprefixer: { grid: true }
 			} )
@@ -130,14 +137,14 @@ if ( mix.inProduction() ) {
  * @link https://webpack.js.org/configuration/
  */
 mix.webpackConfig( {
-	mode: mix.inProduction() ? "production":"development",
-	devtool: mix.inProduction() ? "":"cheap-source-map",
-	stats: "minimal",
+	mode: mix.inProduction() ? 'production' : 'development',
+	devtool: mix.inProduction() ? '' : 'cheap-source-map',
+	stats: 'minimal',
 	performance: {
 		hints: false
 	},
 	externals: {
-		jquery: "jQuery"
+		jquery: 'jQuery'
 	},
 	watchOptions: {
 		ignored: /node_modules/

@@ -21,6 +21,13 @@ defined( 'ABSPATH' ) || exit;
 class Session extends Data {
 
 	/**
+	 * Reference to the data store.
+	 *
+	 * @var string
+	 */
+	protected static $data_store = \BernskioldMedia\WP\Event\Data_Stores\Session::class;
+
+	/**
 	 * Get Session Title
 	 *
 	 * @return string
@@ -135,15 +142,24 @@ class Session extends Data {
 	 * @return array|null
 	 */
 	public function get_speaker_ids(): ?array {
+
+		$speakers = $this->get_prop( 'session_speakers_ids' );
+
+		if ( ! $speakers ) {
+			return null;
+		}
+
 		return $this->get_prop( 'session_speakers_ids' );
 	}
 
 	/**
 	 * Get the speakers (with objects) associated with this session.
 	 *
+	 * @param  string  $type
+	 *
 	 * @return Speaker[]|null
 	 */
-	public function get_speakers(): ?array {
+	public function get_speakers( $type = ARRAY_A ): ?array {
 		$ids = $this->get_speaker_ids();
 
 		if ( ! $ids ) {
@@ -153,7 +169,12 @@ class Session extends Data {
 		$speakers = [];
 
 		foreach ( $ids as $id ) {
-			$speakers[] = new Speaker( $id );
+
+			if ( ARRAY_A === $type ) {
+				$speakers[] = ( new Speaker( $id ) )->to_array();
+			} else {
+				$speakers[] = new Speaker( $id );
+			}
 		}
 
 		return $speakers;

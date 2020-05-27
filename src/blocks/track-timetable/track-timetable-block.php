@@ -21,7 +21,8 @@ class Track_Timetable_Block extends Block {
 	 */
 	protected static $attributes = [
 		'track_id' => [
-			'type' => 'number',
+			'type'    => 'number',
+			'default' => 0,
 		],
 		'style'    => [
 			'type'    => 'string',
@@ -68,11 +69,13 @@ class Track_Timetable_Block extends Block {
 		$classes[] = 'is-style-' . $attributes['style'];
 		$classes   = implode( ' ', $classes );
 
+		ob_start();
+
 		if ( $posts->have_posts() ) : ?>
 
 			<div class="<?php echo esc_attr( $classes ); ?>" id="<?php echo esc_attr( $attributes['anchor'] ); ?>">
 
-				<?php while ( $posts->have_posts() ) : the_post(); // @codingStandardsIgnoreLine ?>
+				<?php while ( $posts->have_posts() ) : $posts->the_post(); // @codingStandardsIgnoreLine ?>
 
 					<?php $session = new Data\Session( get_the_ID() ); ?>
 
@@ -87,9 +90,7 @@ class Track_Timetable_Block extends Block {
 							<?php endif; ?>
 
 							<?php if ( $session->get_end_time() ) : ?>
-								<span class="session-list-item-time-separator">
-									-
-								</span>
+								<span class="session-list-item-time-separator"></span>
 								<time datetime="<?php echo esc_attr( $session->get_date( 'Y-m-d' ) ); ?> <?php echo esc_attr( $session->get_end_time() ); ?>" class="session-list-item-time-end">
 									<?php echo esc_html( $session->get_end_time() ); ?>
 								</time>
@@ -113,7 +114,7 @@ class Track_Timetable_Block extends Block {
 							<?php if ( $session->get_speakers() ) : ?>
 								<div class="session-list-item-speakers">
 
-									<?php foreach ( $session->get_speakers() as $speaker ) : ?>
+									<?php foreach ( $session->get_speakers( OBJECT_K ) as $speaker ) : ?>
 
 										<div class="speaker">
 											<p class="speaker-name"><?php echo esc_html( $speaker->get_name() ); ?></p>
@@ -140,6 +141,8 @@ class Track_Timetable_Block extends Block {
 
 		<?php
 		endif;
+
+		return ob_get_clean();
 
 	}
 
