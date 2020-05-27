@@ -76,6 +76,10 @@ abstract class Data_Store_WP implements Data_Store_Interface {
 			add_action( 'rest_api_init', [ static::class, 'rest_fields' ] );
 		}
 
+		if ( method_exists( static::class, 'query_modifications' ) ) {
+			add_filter( 'pre_get_posts', [ static::class, 'query_modifications' ], 10, 1 );
+		}
+
 	}
 
 	/**
