@@ -1,0 +1,48 @@
+.session-list {}
+
+.session-list-item {
+	display: grid;
+	align-items: flex-start;
+	margin-bottom: 2rem;
+	grid-template-areas: "time info";
+	grid-template-rows: auto;
+	grid-template-columns: 10rem 1fr;
+	grid-gap: 2rem;
+}
+
+.session-list-item-time {
+	font-weight: bold;
+	padding: 0.5rem 1rem;
+	text-align: center;
+	background-color: #f4f4f4;
+	grid-area: time;
+}
+
+.session-list-item-time-start {}
+
+.session-list-item-time-separator {
+	&::before {
+		content: ' – ';
+	}
+}
+
+.session-list-item-time-end {}
+
+.session-list-item-info {
+	grid-area: info;
+}
+
+.session-list-item-title {
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.session-list-item-topic {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.session-list-item-description {
+}
+
+.session-list-item-speakers {}

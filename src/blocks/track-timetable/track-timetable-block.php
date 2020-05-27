@@ -37,7 +37,7 @@ class Track_Timetable_Block extends Block {
 	 *
 	 * @return \WP_Query
 	 */
-	protected static function get_query( $attributes ) {
+	protected static function get_query( $attributes ): \WP_Query {
 
 		$query_args = [
 			'post_type'      => Data_Stores\Session::get_key(),
@@ -60,6 +60,8 @@ class Track_Timetable_Block extends Block {
 	 * Render the content
 	 *
 	 * @param  array  $attributes
+	 *
+	 * @return false|string
 	 */
 	public static function render( $attributes ) {
 

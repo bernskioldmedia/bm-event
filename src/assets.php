@@ -22,7 +22,7 @@ class Assets {
 	/**
 	 * Assets Constructor
 	 */
-	public static function init(): void {
+	public static function hooks(): void {
 
 		// Styles.
 		add_action( 'wp_enqueue_scripts', [ self::class, 'public_styles' ] );
@@ -38,6 +38,12 @@ class Assets {
 	 * Registers and enqueues public stylesheets.
 	 **/
 	public static function public_styles() {
+
+		// We may optionally set a filter to disable public CSS.
+		// For example, if we want to bring in the styles in a theme.
+		if ( true === apply_filters( 'bm_event_disable_public_css', false ) ) {
+			return;
+		}
 
 		/**
 		 * Register Main Stylesheet.
@@ -110,5 +116,3 @@ class Assets {
 
 	}
 }
-
-Assets::init();
