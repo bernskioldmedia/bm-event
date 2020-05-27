@@ -10,6 +10,7 @@
 namespace BernskioldMedia\WP\Event\Data_Stores;
 
 use BernskioldMedia\WP\Event\Abstracts;
+use WP_Query;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -114,6 +115,31 @@ class Speaker extends Abstracts\Custom_Post_Type {
 		];
 
 		register_post_type( self::get_key(), $args );
+
+	}
+
+	/**
+	 * Modify the QUery
+	 *
+	 * @param  WP_Query  $query
+	 *
+	 * @return WP_Query
+	 */
+	public static function query_modifications( $query ) {
+
+		if ( is_admin() && ! $query->is_main_query() ) {
+			return $query;
+		}
+
+		if ( $query->get( 'post_type' ) !== static::get_key() ) {
+			return $query;
+		}
+
+		$query->set( 'orderby', 'meta_value' );
+		$query->set( 'meta_key', 'speaker_last_name' );
+		$query->set( 'order', 'ASC' );
+
+		return $query;
 
 	}
 
