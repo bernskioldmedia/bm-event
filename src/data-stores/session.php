@@ -132,7 +132,7 @@ class Session extends Abstracts\Custom_Post_Type {
 	}
 
 	/**
-	 *
+	 * Modify the query.
 	 *
 	 * @param  WP_Query  $query
 	 *
