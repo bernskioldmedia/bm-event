@@ -3,7 +3,7 @@
 .session-list-item {
 	display: grid;
 	align-items: flex-start;
-	margin-bottom: 2rem;
+	margin-bottom: 3rem;
 	grid-template-areas: "time info";
 	grid-template-rows: auto;
 	grid-template-columns: 10rem 1fr;

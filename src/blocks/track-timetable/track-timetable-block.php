@@ -130,8 +130,6 @@ class Track_Timetable_Block extends Block {
 											<div class="speaker-list-item-info">
 												<p class="speaker-list-item-name"><?php echo esc_html( $speaker->get_name() ); ?></p>
 
-												<p class="speaker-list-item-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-
 												<?php if ( $speaker->get_title() ) : ?>
 													<p class="speaker-list-item-title">
 														<?php echo esc_html( $speaker->get_title() ); ?>

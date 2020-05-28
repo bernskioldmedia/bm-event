@@ -1,18 +1,23 @@
-.speaker-list {}
+.speaker-list {
+	display: flex;
+	flex-flow: row;
+	justify-content: space-between;
+}
 
 .speaker-list-item {
 	display: flex;
-	flex-flow: row;
 	align-items: center;
+	flex: 0 1 calc(50% - 1.5rem);
+	flex-flow: row;
 }
 
 .speaker-list-item-figure {
 	margin-right: 1.5rem;
 
 	img {
-		border-radius: 50%;
 		max-width: 4rem;
 		max-height: 4rem;
+		border-radius: 50%;
 	}
 }
 
