@@ -1,0 +1,27 @@
+.speaker-list {}
+
+.speaker-list-item {
+	display: flex;
+	flex-flow: row;
+	align-items: center;
+}
+
+.speaker-list-item-figure {
+	margin-right: 1.5rem;
+
+	img {
+		border-radius: 50%;
+		max-width: 4rem;
+		max-height: 4rem;
+	}
+}
+
+.speaker-list-item-name {
+	font-weight: bold;
+	margin-bottom: 0;
+}
+
+.speaker-list-item-title {
+	font-size: 95%;
+}
+

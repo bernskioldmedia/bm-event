@@ -114,18 +114,30 @@ class Track_Timetable_Block extends Block {
 							<?php endif; ?>
 
 							<?php if ( $session->get_speakers() ) : ?>
-								<div class="session-list-item-speakers">
+								<div class="session-list-item-speakers speaker-list">
 
 									<?php foreach ( $session->get_speakers( OBJECT_K ) as $speaker ) : ?>
 
-										<div class="speaker">
-											<p class="speaker-name"><?php echo esc_html( $speaker->get_name() ); ?></p>
+										<div class="speaker-list-item">
 
-											<?php if ( $speaker->get_title() ) : ?>
-												<p class="speaker-title">
-													<?php echo esc_html( $speaker->get_title() ); ?>
-												</p>
+											<?php if ( has_post_thumbnail( $speaker->get_id() ) ) : ?>
+												<figure class="speaker-list-item-figure">
+													<img src="<?php echo esc_attr( get_the_post_thumbnail_url( $speaker->get_id(),
+														'thumbnail' ) ); ?>" alt="<?php echo esc_attr( $speaker->get_name() ); ?>">
+												</figure>
 											<?php endif; ?>
+
+											<div class="speaker-list-item-info">
+												<p class="speaker-list-item-name"><?php echo esc_html( $speaker->get_name() ); ?></p>
+
+												<p class="speaker-list-item-title">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
+
+												<?php if ( $speaker->get_title() ) : ?>
+													<p class="speaker-list-item-title">
+														<?php echo esc_html( $speaker->get_title() ); ?>
+													</p>
+												<?php endif; ?>
+											</div>
 										</div>
 
 									<?php endforeach; ?>
