@@ -77,6 +77,8 @@ class Track_Timetable_Block extends Block {
 
 			<div class="<?php echo esc_attr( $classes ); ?>" id="<?php echo esc_attr( $attributes['anchor'] ); ?>">
 
+				<div class="js--track-timetable-timezone-selector"></div>
+
 				<?php while ( $posts->have_posts() ) : $posts->the_post(); // @codingStandardsIgnoreLine ?>
 
 					<?php $session = new Data\Session( get_the_ID() ); ?>

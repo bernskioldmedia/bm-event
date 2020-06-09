@@ -93,6 +93,11 @@ class Assets {
 		// Enqueue.
 		wp_enqueue_script( 'bm-event-app' );
 
+		/**
+		 * Add Timezone Inline Script
+		 */
+		wp_add_inline_script( 'bm-event-app', self::get_timezone_script(), 'before' );
+
 	}
 
 	/**
@@ -113,6 +118,22 @@ class Assets {
 
 		// Enqueue.
 		wp_enqueue_script( 'bm-event-admin' );
+
+	}
+
+	public static function get_timezone_script(): string {
+
+		ob_start();
+		?>
+		<script type="text/javascript">
+			var BMEventTimezone = {
+				gmtOffset: <?php echo esc_js( get_option( 'gmt_offset' ) ); ?>,
+				string: '<?php echo esc_js( get_option( 'timezone_string' ) ); ?>',
+			};
+		</script>
+		<?php
+
+		return ob_get_clean();
 
 	}
 }
