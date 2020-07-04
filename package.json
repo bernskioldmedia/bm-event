@@ -3,11 +3,6 @@
   "version": "1.0.0",
   "description": "Functionality to help you market and manage an event. From showing speakers to a live agenda for one or multiple days.",
   "main": "assets/scripts/src/index.js",
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
   "scripts": {
     "test": "phpunit",
     "release": "npm install && composer install --no-dev -o && npm run build",
@@ -32,14 +27,6 @@
     "url": "https://bernskioldmedia.com",
     "role": "developer"
   },
-  "lint-staged": {
-    "*.css": [
-      "stylelint"
-    ],
-    "*.js": [
-      "eslint"
-    ]
-  },
   "devDependencies": {
     "@babel/preset-react": "^7.10.0",
     "@wordpress/eslint-plugin": "^4.1",
@@ -58,9 +45,7 @@
     "eslint-plugin-prettier": "^3.1",
     "eslint-plugin-react": "^7.19",
     "eslint-plugin-react-hooks": "^2.5",
-    "husky": "^3.1",
     "laravel-mix": "^5.0",
-    "lint-staged": "^9.5.0",
     "node-wp-i18n": "^1.2",
     "postcss-custom-properties": "^9.1",
     "postcss-preset-env": "^6.7",
