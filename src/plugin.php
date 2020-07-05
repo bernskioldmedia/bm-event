@@ -242,4 +242,20 @@ class Plugin {
 		] );
 
 	}
+
+	/**
+	 * Load Template
+	 *
+	 * @param  string  $template_name
+	 */
+	public static function load_template( $template_name ): void {
+		$located = locate_template( 'components/' . $template_name );
+
+		if ( $located ) {
+			require $located;
+		} else {
+			require self::get_path( 'views/' . $template_name . '.php' );
+		}
+
+	}
 }

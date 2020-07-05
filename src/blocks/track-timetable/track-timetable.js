@@ -26,6 +26,18 @@ registerBlockType( 'bm/track-timetable', {
 	keywords: [
 		__( 'calendar', 'bm-block-track-timetable' ),
 		__( 'events', 'bm-block-track-timetable' ),
+		__( 'agenda', 'bm-block-track-timetable' ),
+	],
+	styles: [
+		{
+			name: "list",
+			label: __( "Agenda", "bm-block-track-timetable" ),
+			isDefault: true
+		},
+		{
+			name: "grid",
+			label: __( "Visual Grid", "bm-block-track-timetable" )
+		}
 	],
 
 	supports: {

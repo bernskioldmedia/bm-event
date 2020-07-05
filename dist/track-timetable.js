@@ -913,7 +913,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
 /* harmony import */ var classnames__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(classnames__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _inspector__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./inspector */ "./src/blocks/track-timetable/inspector.js");
+/* harmony import */ var _components_session_grid_item_session_grid_item__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/session-grid-item/session-grid-item */ "./src/components/session-grid-item/session-grid-item.js");
+/* harmony import */ var _components_session_list_item_session_list_item__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/session-list-item/session-list-item */ "./src/components/session-list-item/session-list-item.js");
+/* harmony import */ var _inspector__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./inspector */ "./src/blocks/track-timetable/inspector.js");
 
 
 function _typeof(obj) {
@@ -1087,9 +1089,11 @@ function _defineProperty(obj, key, value) {
 
 
 
+
 /**
  * Internal Dependencies
  */
+
 
 
 /**
@@ -1102,9 +1106,7 @@ var _wp = wp,
 var _wp$data = wp.data,
     withSelect = _wp$data.withSelect,
     registerStore = _wp$data.registerStore;
-var _wp$element = wp.element,
-    Fragment = _wp$element.Fragment,
-    Component = _wp$element.Component;
+var Component = wp.element.Component;
 var _wp$components = wp.components,
     Placeholder = _wp$components.Placeholder,
     Spinner = _wp$components.Spinner,
@@ -1127,25 +1129,25 @@ var DEFAULT_STATE = {
 var actions = {
   setSessions: function setSessions(sessions) {
     return {
-      type: 'SET_SESSIONS',
+      type: "SET_SESSIONS",
       sessions: sessions
     };
   },
   receiveSessions: function receiveSessions(path) {
     return {
-      type: 'RECIEVE_SESSIONS',
+      type: "RECIEVE_SESSIONS",
       path: path
     };
   },
   setTracks: function setTracks(tracks) {
     return {
-      type: 'SET_TRACKS',
+      type: "SET_TRACKS",
       tracks: tracks
     };
   },
   receiveTracks: function receiveTracks(path) {
     return {
-      type: 'RECIEVE_TRACKS',
+      type: "RECIEVE_TRACKS",
       path: path
     };
   }
@@ -1155,18 +1157,18 @@ var actions = {
  * sessions.
  */
 
-registerStore('bm/track-timetable', {
+registerStore("bm/track-timetable", {
   reducer: function reducer() {
     var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_STATE;
     var action = arguments.length > 1 ? arguments[1] : undefined;
 
     switch (action.type) {
-      case 'SET_SESSIONS':
+      case "SET_SESSIONS":
         return _objectSpread(_objectSpread({}, state), {}, {
           sessions: action.sessions
         });
 
-      case 'SET_TRACKS':
+      case "SET_TRACKS":
         return _objectSpread(_objectSpread({}, state), {}, {
           tracks: action.tracks
         });
@@ -1206,9 +1208,9 @@ registerStore('bm/track-timetable', {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              params = _args.length > 0 && _args[0] !== undefined ? _args[0] : '';
+              params = _args.length > 0 && _args[0] !== undefined ? _args[0] : "";
               _context.next = 3;
-              return actions.receiveSessions('/wp/v2/session' + params);
+              return actions.receiveSessions("/wp/v2/session" + params);
 
             case 3:
               sessions = _context.sent;
@@ -1229,9 +1231,9 @@ registerStore('bm/track-timetable', {
         while (1) {
           switch (_context2.prev = _context2.next) {
             case 0:
-              params = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : '';
+              params = _args2.length > 0 && _args2[0] !== undefined ? _args2[0] : "";
               _context2.next = 3;
-              return actions.receiveTracks('/wp/v2/track' + params);
+              return actions.receiveTracks("/wp/v2/track" + params);
 
             case 3:
               tracks = _context2.sent;
@@ -1290,7 +1292,7 @@ var Edit = /*#__PURE__*/function (_Component) {
 
       return [{
         value: 0,
-        label: __('Select a track...', 'bm-block-track-timetable')
+        label: __("Select a track...", "bm-block-track-timetable")
       }].concat(tracks.map(function (track) {
         return {
           value: track.id,
@@ -1298,54 +1300,16 @@ var Edit = /*#__PURE__*/function (_Component) {
         };
       }));
     }
-    /**
-     * Render a single track based on the track data.
-     *
-     * @param session
-     * @returns {*}
-     */
-
   }, {
-    key: "renderSession",
-    value: function renderSession(session) {
-      var id = session.id,
-          title = session.title,
-          start_time = session.start_time,
-          end_time = session.end_time,
-          topic = session.topic,
-          short_description = session.short_description,
-          speakers = session.speakers;
-      return /*#__PURE__*/React.createElement("div", {
-        className: "session-list-item",
-        id: "session-".concat(id.toString()),
-        key: id.toString()
-      }, /*#__PURE__*/React.createElement("div", {
-        className: "session-list-item-time"
-      }, start_time && /*#__PURE__*/React.createElement("time", {
-        className: "session-list-item-time-start"
-      }, start_time), end_time && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
-        className: "session-list-item-time-separator"
-      }), /*#__PURE__*/React.createElement("time", {
-        className: "session-list-item-time-end"
-      }, end_time))), /*#__PURE__*/React.createElement("div", {
-        className: "session-list-item-info"
-      }, /*#__PURE__*/React.createElement("h3", {
-        className: "session-list-item-title"
-      }, title.rendered), topic && /*#__PURE__*/React.createElement("p", {
-        className: "session-list-item-topic"
-      }, topic), short_description && /*#__PURE__*/React.createElement("p", {
-        className: "session-list-item-short-description"
-      }, short_description), speakers && /*#__PURE__*/React.createElement("div", {
-        className: "session-list-item-speakers"
-      }, speakers.map(function (speaker) {
-        return /*#__PURE__*/React.createElement("div", {
-          className: "speaker"
-        }, /*#__PURE__*/React.createElement("p", {
-          className: "speaker-name"
-        }, speaker.name), speaker.title && /*#__PURE__*/React.createElement("p", {
-          className: "speaker-title"
-        }, speaker.title));
-      }))));
+    key: "getStyle",
+    value: function getStyle(className) {
+      if (className.includes("is-style-list")) {
+        return "list";
+      } else if (className.includes("is-style-grid")) {
+        return "grid";
+      } else {
+        return "list";
+      }
     }
     /**
      * Map the render event function to the list of sessions
@@ -1359,16 +1323,21 @@ var Edit = /*#__PURE__*/function (_Component) {
     value: function renderSessions() {
       var _this = this;
 
-      var _this$props = this.props,
-          className = _this$props.className,
-          attributes = _this$props.attributes;
+      var className = this.props.className;
       var sessions = this.getSessions();
-      console.log(sessions);
-      var classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()('track-timetable', _defineProperty({}, className, className));
+      var classes = classnames__WEBPACK_IMPORTED_MODULE_1___default()("sessions", _defineProperty({}, className, className));
       return /*#__PURE__*/React.createElement("div", {
         className: classes
       }, sessions.map(function (session) {
-        return _this.renderSession(session);
+        if ("grid" === _this.getStyle(className)) {
+          return /*#__PURE__*/React.createElement(_components_session_grid_item_session_grid_item__WEBPACK_IMPORTED_MODULE_2__["default"], {
+            data: session
+          });
+        } else {
+          return /*#__PURE__*/React.createElement(_components_session_list_item_session_list_item__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            data: session
+          });
+        }
       }));
     }
     /**
@@ -1380,19 +1349,19 @@ var Edit = /*#__PURE__*/function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this$props2 = this.props,
-          isRequesting = _this$props2.isRequesting,
-          attributes = _this$props2.attributes,
-          setAttributes = _this$props2.setAttributes;
+      var _this$props = this.props,
+          isRequesting = _this$props.isRequesting,
+          attributes = _this$props.attributes,
+          setAttributes = _this$props.setAttributes;
 
       if (0 === attributes.track_id) {
-        return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_2__["default"], this.props), /*#__PURE__*/React.createElement(Placeholder, {
+        return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_4__["default"], this.props), /*#__PURE__*/React.createElement(Placeholder, {
           icon: "admin-post",
-          label: __('Select A Track', 'bm-block-track-timetable'),
-          instructions: __('Select the track you want to display the timetable for.', 'bm-block-track-timetable'),
+          label: __("Select A Track", "bm-block-track-timetable"),
+          instructions: __("Select the track you want to display the timetable for.", "bm-block-track-timetable"),
           isColumnLayout: true
         }, /*#__PURE__*/React.createElement(SelectControl, {
-          label: __('Select a track', 'bm-block-track-timetable'),
+          label: __("Select a track", "bm-block-track-timetable"),
           onChange: function onChange(value) {
             setAttributes({
               track_id: parseInt(value)
@@ -1408,9 +1377,9 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 
       if (isRequesting) {
-        return /*#__PURE__*/React.createElement(Fragment, null, Object(_inspector__WEBPACK_IMPORTED_MODULE_2__["default"])(this.props), /*#__PURE__*/React.createElement(Placeholder, {
+        return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_4__["default"], this.props), /*#__PURE__*/React.createElement(Placeholder, {
           icon: "admin-post",
-          label: __('Loading sessions...', 'bm-block-track-timetable')
+          label: __("Loading sessions...", "bm-block-track-timetable")
         }, /*#__PURE__*/React.createElement(Spinner, null)));
       }
       /**
@@ -1419,7 +1388,7 @@ var Edit = /*#__PURE__*/function (_Component) {
        */
 
 
-      return /*#__PURE__*/React.createElement(Fragment, null, this.renderSessions());
+      return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(_inspector__WEBPACK_IMPORTED_MODULE_4__["default"], this.props), this.renderSessions());
     }
   }]);
 
@@ -1436,18 +1405,18 @@ var Edit = /*#__PURE__*/function (_Component) {
 
 /* harmony default export */ __webpack_exports__["default"] = (withSelect(function (select, props) {
   var attributes = props.attributes;
-  var store = select('bm/track-timetable');
+  var store = select("bm/track-timetable");
   var query = {
     per_page: 100,
     // More than enough for "everything".
     track: attributes.track_id
   };
-  var params = '?' + Object.keys(query).map(function (k) {
+  var params = "?" + Object.keys(query).map(function (k) {
     return "".concat(encodeURIComponent(k), "=").concat(encodeURIComponent(query[k]));
-  }).join('&');
+  }).join("&");
   return {
     sessions: attributes.track_id ? store.getSessions(params) : [],
-    tracks: store.getTracks('?per_page=50')
+    tracks: store.getTracks("?per_page=50")
   };
 })(Edit));
 
@@ -1507,9 +1476,7 @@ var __ = wp.i18n.__;
 var InspectorControls = wp.blockEditor.InspectorControls;
 var _wp$components = wp.components,
     PanelBody = _wp$components.PanelBody,
-    PanelRow = _wp$components.PanelRow,
-    BaseControl = _wp$components.BaseControl,
-    RangeControl = _wp$components.RangeControl,
+    ToggleControl = _wp$components.ToggleControl,
     SelectControl = _wp$components.SelectControl;
 /**
  * Posts Block Inspector
@@ -1518,24 +1485,17 @@ var _wp$components = wp.components,
 function Inspector(props) {
   var attributes = props.attributes,
       setAttributes = props.setAttributes;
+  var showTimezoneSelector = attributes.showTimezoneSelector;
   return /*#__PURE__*/React.createElement(InspectorControls, null, /*#__PURE__*/React.createElement(PanelBody, {
-    title: __('Events Style', 'bm-block-track-timetable')
-  }, /*#__PURE__*/React.createElement(SelectControl, {
-    label: __('Timetable Style', 'bm-block-track-timetable'),
-    value: attributes.style // e.g: value = [ 'a', 'c' ]
-    ,
-    onChange: function onChange(value) {
-      setAttributes({
-        style: value
+    title: __("Timezone Selector", "bm-block-track-timetable")
+  }, /*#__PURE__*/React.createElement(ToggleControl, {
+    label: __("Show timezone selector?", "bm-block-track-timetable"),
+    checked: showTimezoneSelector,
+    onChange: function onChange(showTimezoneSelector) {
+      return setAttributes({
+        showTimezoneSelector: showTimezoneSelector
       });
-    },
-    options: [{
-      value: 'normal',
-      label: __('Normal', 'bm-block-track-timetable')
-    }, {
-      value: 'mini',
-      label: __('Mini', 'bm-block-track-timetable')
-    }]
+    }
   })));
 }
 
@@ -1598,7 +1558,15 @@ registerBlockType('bm/track-timetable', {
   description: __('Show a timetable for a single track.', 'bm-block-track-timetable'),
   icon: _icon__WEBPACK_IMPORTED_MODULE_1__["default"],
   category: 'event',
-  keywords: [__('calendar', 'bm-block-track-timetable'), __('events', 'bm-block-track-timetable')],
+  keywords: [__('calendar', 'bm-block-track-timetable'), __('events', 'bm-block-track-timetable'), __('agenda', 'bm-block-track-timetable')],
+  styles: [{
+    name: "list",
+    label: __("Agenda", "bm-block-track-timetable"),
+    isDefault: true
+  }, {
+    name: "grid",
+    label: __("Visual Grid", "bm-block-track-timetable")
+  }],
   supports: {
     anchor: true,
     align: false
@@ -1612,6 +1580,114 @@ registerBlockType('bm/track-timetable', {
   edit: _edit__WEBPACK_IMPORTED_MODULE_0__["default"],
   save: _save__WEBPACK_IMPORTED_MODULE_2__["default"]
 });
+
+/***/ }),
+
+/***/ "./src/components/session-grid-item/session-grid-item.js":
+/*!***************************************************************!*\
+  !*** ./src/components/session-grid-item/session-grid-item.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SessionGridItem; });
+function SessionGridItem(props) {
+  var data = props.data;
+  var id = data.id,
+      title = data.title,
+      start_time = data.start_time,
+      end_time = data.end_time,
+      topic = data.topic,
+      short_description = data.short_description,
+      speakers = data.speakers;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "session-grid-item",
+    id: "session-".concat(id.toString()),
+    key: id.toString()
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "session-grid-time"
+  }, start_time && /*#__PURE__*/React.createElement("time", {
+    className: "session-grid-time-start"
+  }, start_time), end_time && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    className: "session-grid-time-separator"
+  }), /*#__PURE__*/React.createElement("time", {
+    className: "session-grid-time-end"
+  }, end_time))), /*#__PURE__*/React.createElement("div", {
+    className: "session-grid-info"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "session-grid-title"
+  }, title.rendered), topic && /*#__PURE__*/React.createElement("p", {
+    className: "session-grid-topic"
+  }, topic), short_description && /*#__PURE__*/React.createElement("p", {
+    className: "session-grid-short-description"
+  }, short_description), speakers && /*#__PURE__*/React.createElement("div", {
+    className: "session-grid-speakers"
+  }, speakers.map(function (speaker) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "speaker"
+    }, /*#__PURE__*/React.createElement("p", {
+      className: "speaker-name"
+    }, speaker.name), speaker.title && /*#__PURE__*/React.createElement("p", {
+      className: "speaker-title"
+    }, speaker.title));
+  }))));
+}
+
+/***/ }),
+
+/***/ "./src/components/session-list-item/session-list-item.js":
+/*!***************************************************************!*\
+  !*** ./src/components/session-list-item/session-list-item.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return SessionListItem; });
+function SessionListItem(props) {
+  var data = props.data;
+  var id = data.id,
+      title = data.title,
+      start_time = data.start_time,
+      end_time = data.end_time,
+      topic = data.topic,
+      short_description = data.short_description,
+      speakers = data.speakers;
+  return /*#__PURE__*/React.createElement("div", {
+    className: "session-list-item",
+    id: "session-".concat(id.toString()),
+    key: id.toString()
+  }, /*#__PURE__*/React.createElement("div", {
+    className: "session-list-item-time"
+  }, start_time && /*#__PURE__*/React.createElement("time", {
+    className: "session-list-item-time-start"
+  }, start_time), end_time && /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("span", {
+    className: "session-list-item-time-separator"
+  }), /*#__PURE__*/React.createElement("time", {
+    className: "session-list-item-time-end"
+  }, end_time))), /*#__PURE__*/React.createElement("div", {
+    className: "session-list-item-info"
+  }, /*#__PURE__*/React.createElement("h3", {
+    className: "session-list-item-title"
+  }, title.rendered), topic && /*#__PURE__*/React.createElement("p", {
+    className: "session-list-item-topic"
+  }, topic), short_description && /*#__PURE__*/React.createElement("p", {
+    className: "session-list-item-short-description"
+  }, short_description), speakers && /*#__PURE__*/React.createElement("div", {
+    className: "session-list-item-speakers"
+  }, speakers.map(function (speaker) {
+    return /*#__PURE__*/React.createElement("div", {
+      className: "speaker"
+    }, /*#__PURE__*/React.createElement("p", {
+      className: "speaker-name"
+    }, speaker.name), speaker.title && /*#__PURE__*/React.createElement("p", {
+      className: "speaker-title"
+    }, speaker.title));
+  }))));
+}
 
 /***/ }),
 

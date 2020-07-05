@@ -180,4 +180,13 @@ class Session extends Data {
 		return $speakers;
 	}
 
+	/**
+	 * Get the booking URL.
+	 *
+	 * @return string|null
+	 */
+	public function get_booking_url(): ?string {
+		return $this->get_prop( 'session_booking_url' );
+	}
+
 }

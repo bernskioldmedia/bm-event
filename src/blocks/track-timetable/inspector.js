@@ -1,15 +1,13 @@
 /**
  * WordPress Dependencies
  */
-const { __ }                = wp.i18n;
+const { __ } = wp.i18n;
 const { InspectorControls } = wp.blockEditor;
 const {
-		  PanelBody,
-		  PanelRow,
-		  BaseControl,
-		  RangeControl,
-		  SelectControl
-	  }                     = wp.components;
+	PanelBody,
+	ToggleControl,
+	SelectControl
+} = wp.components;
 
 /**
  * Posts Block Inspector
@@ -17,27 +15,16 @@ const {
 export default function Inspector( props ) {
 
 	const { attributes, setAttributes } = props;
+	const { showTimezoneSelector } = attributes;
 
 	return (
 		<InspectorControls>
 
-			<PanelBody title={__( 'Events Style', 'bm-block-track-timetable' )}>
-				<SelectControl
-					label={__( 'Timetable Style', 'bm-block-track-timetable' )}
-					value={attributes.style} // e.g: value = [ 'a', 'c' ]
-					onChange={( value ) => {
-						setAttributes( { style: value } );
-					}}
-					options={[
-						{
-							value: 'normal',
-							label: __( 'Normal', 'bm-block-track-timetable' )
-						},
-						{
-							value: 'mini',
-							label: __( 'Mini', 'bm-block-track-timetable' )
-						}
-					]}
+			<PanelBody title={__( "Timezone Selector", "bm-block-track-timetable" )}>
+				<ToggleControl
+					label={__( "Show timezone selector?", "bm-block-track-timetable" )}
+					checked={showTimezoneSelector}
+					onChange={( showTimezoneSelector ) => setAttributes( { showTimezoneSelector } )}
 				/>
 			</PanelBody>
 

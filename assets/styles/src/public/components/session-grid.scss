@@ -1,0 +1,90 @@
+.sessions.is-style-grid {
+	display: flex;
+	flex-wrap: wrap;
+	margin: -1.5rem;
+}
+
+.session-grid-item {
+	position: relative;
+	display: flex;
+	flex-flow: column;
+	flex-basis: calc((45rem - 100%) * 999);
+	flex-grow: 1;
+	margin: 1.5rem;
+	border: 1px solid #dddddd;
+	background-color: #ffffff;
+	min-width: 20rem;
+}
+
+.session-grid-item-figure {
+	padding-top: 56.25%;
+	background-color: #222222;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+
+	* {
+		display: none;
+	}
+}
+
+.session-grid-item-time {
+	font-weight: bold;
+	position: absolute;
+	top: 4rem;
+	left: -1rem;
+	padding: 0.5rem 1rem;
+	text-align: center;
+	background-color: #f4f4f4;
+}
+
+.session-grid-item-time-start {}
+
+.session-grid-item-time-separator {
+	&::before {
+		content: ' – ';
+	}
+}
+
+.session-grid-item-time-end {}
+
+.session-grid-item-info {
+	flex: 1 1 auto;
+	padding: 1.5rem;
+}
+
+.session-grid-item-title {
+	font-size: 1rem;
+	font-weight: bold;
+}
+
+.session-grid-item-topic {
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.session-grid-item-description {
+}
+
+.session-grid-item-speakers {
+	margin: 1.5rem -1.5rem 0 -1.5rem;
+	padding: 1.5rem 1.5rem 0 1.5rem;
+	border-top: 1px solid #dddddd;
+}
+
+.session-grid-item-action {
+	font-weight: bold;
+	display: block;
+	padding: 0.75rem 1.5rem;
+	transition: 0.25s background-color ease-in-out;
+	text-align: center;
+	text-transform: uppercase;
+	color: white;
+	background-color: var(--color-primary);
+
+	&:hover {
+		text-decoration: none;
+		color: white;
+		background-color: var(--color-primary-hover);
+	}
+}

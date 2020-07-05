@@ -26,6 +26,7 @@ class Assets {
 
 		// Styles.
 		add_action( 'wp_enqueue_scripts', [ self::class, 'public_styles' ] );
+		add_action( 'enqueue_block_editor_assets', [ self::class, 'block_editor_assets' ] );
 		// add_action( 'admin_enqueue_scripts', [ self::class, 'admin_styles' ] );
 
 		// Scripts.
@@ -58,6 +59,21 @@ class Assets {
 			wp_enqueue_style( 'bm-event-public' );
 			wp_enqueue_style( 'select2' );
 		}
+	}
+
+	/**
+	 * Load the styles for the block editor.
+	 */
+	public static function block_editor_assets() {
+
+		// We may optionally set a filter to disable public CSS.
+		// For example, if we want to bring in the styles in a theme.
+		if ( true === apply_filters( 'bm_event_disable_public_css', false ) ) {
+			return;
+		}
+
+		wp_enqueue_style( 'bm-event-block', Plugin::get_assets_url( 'styles/dist/app.css' ), false, Plugin::get_version(), 'all' );
+
 	}
 
 	/**

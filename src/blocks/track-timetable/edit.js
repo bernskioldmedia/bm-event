@@ -1,19 +1,21 @@
 /**
  * External Dependencies
  */
-import classnames from 'classnames';
+import classnames from "classnames";
+import SessionGridItem from "../../components/session-grid-item/session-grid-item";
 /**
  * Internal Dependencies
  */
-import Inspector from './inspector';
+import SessionListItem from "../../components/session-list-item/session-list-item";
+import Inspector from "./inspector";
 
 /**
  * WordPress Dependencies
  */
-const { __ }                                  = wp.i18n;
-const { apiFetch }                            = wp;
-const { withSelect, registerStore }           = wp.data;
-const { Fragment, Component }                 = wp.element;
+const { __ } = wp.i18n;
+const { apiFetch } = wp;
+const { withSelect, registerStore } = wp.data;
+const { Component } = wp.element;
 const { Placeholder, Spinner, SelectControl } = wp.components;
 
 /**
@@ -33,25 +35,25 @@ const DEFAULT_STATE = {
 const actions = {
 	setSessions( sessions ) {
 		return {
-			type: 'SET_SESSIONS',
+			type: "SET_SESSIONS",
 			sessions,
 		};
 	},
 	receiveSessions( path ) {
 		return {
-			type: 'RECIEVE_SESSIONS',
+			type: "RECIEVE_SESSIONS",
 			path,
 		};
 	},
 	setTracks( tracks ) {
 		return {
-			type: 'SET_TRACKS',
+			type: "SET_TRACKS",
 			tracks,
 		};
 	},
 	receiveTracks( path ) {
 		return {
-			type: 'RECIEVE_TRACKS',
+			type: "RECIEVE_TRACKS",
 			path,
 		};
 	},
@@ -61,16 +63,16 @@ const actions = {
  * Register custom store for getting and setting the
  * sessions.
  */
-registerStore( 'bm/track-timetable', {
+registerStore( "bm/track-timetable", {
 		reducer( state = DEFAULT_STATE, action ) {
 
 			switch ( action.type ) {
-				case 'SET_SESSIONS':
+				case "SET_SESSIONS":
 					return {
 						...state,
 						sessions: action.sessions,
 					};
-				case 'SET_TRACKS':
+				case "SET_TRACKS":
 					return {
 						...state,
 						tracks: action.tracks,
@@ -104,12 +106,12 @@ registerStore( 'bm/track-timetable', {
 		},
 
 		resolvers: {
-			* getSessions( params = '' ) {
-				const sessions = yield actions.receiveSessions( '/wp/v2/session' + params );
+			* getSessions( params = "" ) {
+				const sessions = yield actions.receiveSessions( "/wp/v2/session" + params );
 				return actions.setSessions( sessions );
 			},
-			* getTracks( params = '' ) {
-				const tracks = yield actions.receiveTracks( '/wp/v2/track' + params );
+			* getTracks( params = "" ) {
+				const tracks = yield actions.receiveTracks( "/wp/v2/track" + params );
 				return actions.setTracks( tracks );
 			}
 		},
@@ -152,7 +154,7 @@ class Edit extends Component {
 		return [
 			{
 				value: 0,
-				label: __( 'Select a track...', 'bm-block-track-timetable' )
+				label: __( "Select a track...", "bm-block-track-timetable" )
 			},
 		].concat( tracks.map( ( track ) => {
 			return {
@@ -162,67 +164,15 @@ class Edit extends Component {
 		} ) );
 	}
 
-	/**
-	 * Render a single track based on the track data.
-	 *
-	 * @param session
-	 * @returns {*}
-	 */
-	renderSession( session ) {
+	getStyle( className ) {
 
-		const { id, title, start_time, end_time, topic, short_description, speakers } = session;
-
-		return (
-			<div className="session-list-item" id={`session-${id.toString()}`} key={id.toString()}>
-				<div className="session-list-item-time">
-
-					{start_time && (
-						<time className="session-list-item-time-start">
-							{start_time}
-						</time>
-					)}
-
-					{end_time && (
-						<>
-							<span className="session-list-item-time-separator"></span>
-							<time className="session-list-item-time-end">
-								{end_time}
-							</time>
-						</>
-					)}
-
-				</div>
-				<div className="session-list-item-info">
-
-					<h3 className="session-list-item-title">{title.rendered}</h3>
-
-					{topic && (
-						<p className="session-list-item-topic">{topic}</p>
-					)}
-
-					{short_description && (
-						<p className="session-list-item-short-description">
-							{short_description}
-						</p>
-					)}
-
-					{speakers && (
-						<div className="session-list-item-speakers">
-							{speakers.map( ( speaker ) => (
-								<div className="speaker">
-									<p className="speaker-name">{speaker.name}</p>
-
-									{speaker.title && (
-										<p className="speaker-title">{speaker.title}</p>
-									)}
-								</div>
-							) )}
-						</div>
-					)}
-
-				</div>
-			</div>
-		);
+		if ( className.includes( "is-style-list" ) ) {
+			return "list";
+		} else if ( className.includes( "is-style-grid" ) ) {
+			return "grid";
+		} else {
+			return "list";
+		}
 
 	}
 
@@ -234,19 +184,23 @@ class Edit extends Component {
 	 */
 	renderSessions() {
 
-		const { className, attributes } = this.props;
+		const { className } = this.props;
 
 		const sessions = this.getSessions();
 
-		console.log( sessions );
-
-		const classes = classnames( 'track-timetable', {
+		const classes = classnames( "sessions", {
 			[className]: className,
 		} );
 
 		return (
 			<div className={classes}>
-				{sessions.map( ( session ) => this.renderSession( session ) )}
+				{sessions.map( ( session ) => {
+					if ( "grid" === this.getStyle( className ) ) {
+						return <SessionGridItem data={session} />;
+					} else {
+						return <SessionListItem data={session} />;
+					}
+				} )}
 			</div>
 		);
 	}
@@ -264,14 +218,15 @@ class Edit extends Component {
 			return (
 				<>
 					<Inspector {...this.props} />
+
 					<Placeholder
 						icon="admin-post"
-						label={__( 'Select A Track', 'bm-block-track-timetable' )}
-						instructions={__( 'Select the track you want to display the timetable for.', 'bm-block-track-timetable' )}
+						label={__( "Select A Track", "bm-block-track-timetable" )}
+						instructions={__( "Select the track you want to display the timetable for.", "bm-block-track-timetable" )}
 						isColumnLayout={true}
 					>
 						<SelectControl
-							label={__( 'Select a track', 'bm-block-track-timetable' )}
+							label={__( "Select a track", "bm-block-track-timetable" )}
 							onChange={( value ) => {
 								setAttributes( { track_id: parseInt( value ) } );
 							}}
@@ -288,15 +243,15 @@ class Edit extends Component {
 		 */
 		if ( isRequesting ) {
 			return (
-				<Fragment>
-					{Inspector( this.props )}
+				<>
+					<Inspector {...this.props} />
 					<Placeholder
 						icon="admin-post"
-						label={__( 'Loading sessions...', 'bm-block-track-timetable' )}
+						label={__( "Loading sessions...", "bm-block-track-timetable" )}
 					>
 						<Spinner />
 					</Placeholder>
-				</Fragment>
+				</>
 			);
 		}
 
@@ -305,9 +260,10 @@ class Edit extends Component {
 		 * with the posts data rendered.
 		 */
 		return (
-			<Fragment>
+			<>
+				<Inspector {...this.props} />
 				{this.renderSessions()}
-			</Fragment>
+			</>
 		);
 	}
 
@@ -324,18 +280,18 @@ export default withSelect( ( select, props ) => {
 
 	const { attributes } = props;
 
-	const store = select( 'bm/track-timetable' );
+	const store = select( "bm/track-timetable" );
 
 	let query = {
 		per_page: 100, // More than enough for "everything".
 		track: attributes.track_id,
 	};
 
-	const params = '?' + Object.keys( query ).map( k => `${encodeURIComponent( k )}=${encodeURIComponent( query[k] )}` ).join( '&' );
+	const params = "?" + Object.keys( query ).map( k => `${encodeURIComponent( k )}=${encodeURIComponent( query[k] )}` ).join( "&" );
 
 	return {
 		sessions: attributes.track_id ? store.getSessions( params ) : [],
-		tracks: store.getTracks( '?per_page=50' ),
+		tracks: store.getTracks( "?per_page=50" ),
 	};
 
 } )( Edit );
