@@ -77,7 +77,7 @@ class Track_Timetable_Block extends Block {
 
 			<div class="<?php echo esc_attr( $classes ); ?>" id="<?php echo esc_attr( $attributes['anchor'] ); ?>">
 
-				<div class="js--track-timetable-timezone-selector"></div>
+				<div class="track-timetable-timezone-selector js--track-timetable-timezone-selector"></div>
 
 				<?php while ( $posts->have_posts() ) : $posts->the_post(); // @codingStandardsIgnoreLine ?>
 
@@ -88,16 +88,12 @@ class Track_Timetable_Block extends Block {
 						<div class="session-list-item-time">
 
 							<?php if ( $session->get_start_time() ) : ?>
-								<time datetime="<?php echo esc_attr( $session->get_date( 'Y-m-d' ) ); ?> <?php echo esc_attr( $session->get_start_time() ); ?>" class="session-list-item-time-start">
-									<?php echo esc_html( $session->get_start_time() ); ?>
-								</time>
+								<time datetime="<?php echo esc_attr( $session->get_date( 'Y-m-d' ) ); ?> <?php echo esc_attr( $session->get_start_time() ); ?>" class="session-list-item-time-start js-event-start-time"><?php echo esc_html( $session->get_start_time() ); ?></time>
 							<?php endif; ?>
 
 							<?php if ( $session->get_end_time() ) : ?>
 								<span class="session-list-item-time-separator"></span>
-								<time datetime="<?php echo esc_attr( $session->get_date( 'Y-m-d' ) ); ?> <?php echo esc_attr( $session->get_end_time() ); ?>" class="session-list-item-time-end">
-									<?php echo esc_html( $session->get_end_time() ); ?>
-								</time>
+								<time datetime="<?php echo esc_attr( $session->get_date( 'Y-m-d' ) ); ?> <?php echo esc_attr( $session->get_end_time() ); ?>" class="session-list-item-time-end js-event-end-time"><?php echo esc_html( $session->get_end_time() ); ?></time>
 							<?php endif; ?>
 						</div>
 

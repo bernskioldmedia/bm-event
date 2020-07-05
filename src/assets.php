@@ -26,11 +26,11 @@ class Assets {
 
 		// Styles.
 		add_action( 'wp_enqueue_scripts', [ self::class, 'public_styles' ] );
-		add_action( 'admin_enqueue_scripts', [ self::class, 'admin_styles' ] );
+		// add_action( 'admin_enqueue_scripts', [ self::class, 'admin_styles' ] );
 
 		// Scripts.
 		add_action( 'wp_enqueue_scripts', [ self::class, 'public_scripts' ] );
-		add_action( 'admin_enqueue_scripts', [ self::class, 'admin_scripts' ] );
+		// add_action( 'admin_enqueue_scripts', [ self::class, 'admin_scripts' ] );
 
 	}
 
@@ -49,12 +49,15 @@ class Assets {
 		 * Register Main Stylesheet.
 		 */
 		wp_register_style( 'bm-event-public', Plugin::get_assets_url() . '/styles/dist/app.css', false, Plugin::get_version(), 'all' );
+		wp_register_style( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.0.0/dist/css/select2.min.css', false, '4.0.0', 'all' );
 
 		/**
 		 * Enqueue Stylesheets.
 		 */
-		wp_enqueue_style( 'bm-event-public' );
-
+		if ( self::has_blocks() ) {
+			wp_enqueue_style( 'bm-event-public' );
+			wp_enqueue_style( 'select2' );
+		}
 	}
 
 	/**
@@ -88,15 +91,27 @@ class Assets {
 		 * Register the main, minified
 		 * and compiled script file.
 		 */
-		wp_register_script( 'bm-event-app', Plugin::get_assets_url() . '/scripts/dist/app.js', [ 'jquery' ], Plugin::get_version(), true );
-
-		// Enqueue.
-		wp_enqueue_script( 'bm-event-app' );
+		wp_register_script( 'bm-event-app', Plugin::get_assets_url() . '/scripts/dist/app.js', [ 'jquery', 'select2' ], Plugin::get_version(), true );
+		wp_register_script( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.0.0/dist/js/select2.min.js', [ 'jquery' ], '4.0.0', true );
 
 		/**
-		 * Add Timezone Inline Script
+		 * Only load if we have the right blocks.
 		 */
-		wp_add_inline_script( 'bm-event-app', self::get_timezone_script(), 'before' );
+		if ( self::has_blocks() ) {
+
+			wp_enqueue_script( 'bm-event-app' );
+			wp_enqueue_script( 'select2' );
+
+			wp_localize_script( 'bm-event-app', 'BMEvent', [
+				'texts'        => [
+					'selectTz' => __( 'Select Your Timezone...', 'bm-events' ),
+					'tzLabel'  => __( 'See the schedule in your local time.', 'bm-events' ),
+				],
+				'gmtOfset'     => get_option( 'gmt_offset' ),
+				'siteTimezone' => get_option( 'timezone_string' ),
+			] );
+
+		}
 
 	}
 
@@ -121,19 +136,12 @@ class Assets {
 
 	}
 
-	public static function get_timezone_script(): string {
-
-		ob_start();
-		?>
-		<script type="text/javascript">
-			var BMEventTimezone = {
-				gmtOffset: <?php echo esc_js( get_option( 'gmt_offset' ) ); ?>,
-				string: '<?php echo esc_js( get_option( 'timezone_string' ) ); ?>',
-			};
-		</script>
-		<?php
-
-		return ob_get_clean();
-
+	/**
+	 * Check if we have our plugin blocks.
+	 *
+	 * @return bool
+	 */
+	protected static function has_blocks(): bool {
+		return has_block( 'bm/track-timetable' );
 	}
 }

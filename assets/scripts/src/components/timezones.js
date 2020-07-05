@@ -1,23 +1,149 @@
-var moment = require( "moment-timezone" );
+import $ from "jquery";
+import Cookies from "js-cookie";
+import moment from "moment";
+import "moment-timezone";
 
 export default function Timezones() {
-	document.querySelector( ".js--track-timetable-timezone-selector" ).innerHTML = renderTimezonesSelector();
 
-	moment.tz.setDefault( BMEventTimezone.string );
+	const tzSelectorWrapper = document.querySelector( ".js--track-timetable-timezone-selector" );
+
+	// If timezone support not enabled, don't run this.
+	if ( ! tzSelectorWrapper ) {
+		return;
+	}
+
+	// Page loads with the default timezone.
+	moment.tz.setDefault( BMEvent.siteTimezone );
+
+	// Render the TZ Selector.
+	tzSelectorWrapper.innerHTML = renderTimezonesSelector();
+	$( ".js--track-timetable-timezone-selector select" ).select2( {
+		placeholder: BMEvent.texts.selectTz,
+	} );
+
+	const savedTimeZone = getSavedTimezone();
+
+	/**
+	 * If we have a stored timezone in cookies,
+	 * then apply this and re-render all times.
+	 *
+	 * Otherwise, we try and guess the user's time zone.
+	 */
+	if ( savedTimeZone ) {
+		setTimezone( savedTimeZone, BMEvent.siteTimezone );
+	} else {
+		const userTimeZone = getCurrentUserTimezone();
+
+		if ( userTimeZone ) {
+			setTimezone( userTimeZone, BMEvent.siteTimezone );
+		}
+	}
+
+	/**
+	 * When the user selects a new time zone from the
+	 * dropdown, we store in cookie and re-render the times
+	 * on the page.
+	 */
+	tzSelectorWrapper
+		.querySelector( "select" )
+		.addEventListener( "change", function() {
+			if ( null !== this.value ) {
+				setTimezone( this.value, getCurrentTimeZone() );
+			}
+		} );
+
+	$( ".js--track-timetable-timezone-selector select" ).on( "select2:select", function( e ) {
+		if ( null !== e.params.data.id ) {
+			setTimezone( e.params.data.id, getCurrentTimeZone() );
+		}
+	} );
 
 }
 
-function setTimezone() {
+/**
+ * Get saved timezone from cookies.
+ *
+ * @returns {null|string}
+ */
+function getSavedTimezone() {
+	const saved = Cookies.get( "bm_events_tz" );
+
+	if ( "undefined" === saved ) {
+		return null;
+	}
+
+	return saved;
+}
+
+/**
+ * Apply the new timezone and re-render times.
+ *
+ * @param {string} newTimeZone
+ * @param {string} sourceTimeZone
+ */
+function setTimezone( newTimeZone, sourceTimeZone ) {
+
+	// Store the selected TZ as a cookie.
+	Cookies.set( "bm_events_tz", newTimeZone );
+
+	// Replace the timing in the DOM.
+	const startTimes = document.querySelectorAll( ".js-event-start-time" );
+	const endTimes = document.querySelectorAll( ".js-event-end-time" );
+
+	startTimes.forEach( ( startTime ) => renderTimes( startTime, newTimeZone, sourceTimeZone ) );
+	endTimes.forEach( ( endTime ) => renderTimes( endTime, newTimeZone, sourceTimeZone ) );
 
 }
 
+/**
+ * Update all times on the page with the new timezone.
+ *
+ * @param element
+ * @param {string} timezone
+ */
+function renderTimes( element, newTimeZone, sourceTimeZone ) {
+
+	const originalDateTime = element.getAttribute( "datetime" );
+
+	const localDateTime = convertTimeToTimezone( originalDateTime, newTimeZone, sourceTimeZone, "YYYY-MM-DD HH:mm" );
+	const localHumanReadable = convertTimeToTimezone( originalDateTime, newTimeZone, sourceTimeZone, "HH:mm" );
+
+	element.setAttribute( "datetime", localDateTime );
+	element.textContent = localHumanReadable;
+}
+
+/**
+ * Convert time to timezone.
+ *
+ * @param {string} time
+ * @param {string} newTimeZone
+ * @param {string} sourceTimeZone
+ * @param {string} format
+ *
+ * @return {string} Time in new timezone.
+ */
+function convertTimeToTimezone( time, newTimeZone, sourceTimeZone, format = "YYYY-MM-DD" ) {
+	const originalTime = moment.tz( time, sourceTimeZone );
+
+	return originalTime.clone().tz( newTimeZone ).format( format );
+}
+
+/**
+ * Render the timezone selector.
+ *
+ * @returns {string}
+ */
 function renderTimezonesSelector() {
-	return `<select>
-<option>Select Timezone...</option>
+	return `<label for="bm-events-tz-selector">${BMEvent.texts.tzLabel}</label><select>
+<option value="null" disabled="disabled" name="bm-events-tz-selector" id="bm-events-tz-selector">${BMEvent.texts.selectTz}</option>
 ${renderTimezoneSelectorOptions()}
 </select>`;
 }
 
+/**
+ * Render the timezone selector options.
+ * @returns {*}
+ */
 function renderTimezoneSelectorOptions() {
 
 	const _t = ( s ) => {
@@ -29,9 +155,6 @@ function renderTimezoneSelectorOptions() {
 	};
 
 	return moment.tz.names()
-				 .filter( tz => {
-					 return timezones.includes( tz );
-				 } )
 				 .reduce( ( memo, tz ) => {
 					 memo.push( {
 						 name: tz,
@@ -45,171 +168,45 @@ function renderTimezoneSelectorOptions() {
 				 } )
 				 .reduce( ( memo, tz ) => {
 					 const timezone = tz.offset ? moment.tz( tz.name ).format( "Z" ) : "";
+					 const name = tz.name.replace( "/", " - " );
 
 					 let selected = "";
 
-					 return memo.concat( `<option value="${tz.name}" data-offset="${tz.offset}">(GMT${timezone}) ${_t( tz.name )}</option>` );
+					 if ( tz.name === getCurrentTimeZone() ) {
+						 selected = "selected";
+					 }
+
+					 return memo.concat( `<option value="${tz.name}" ${selected} data-offset="${tz.offset}">(GMT${timezone}) ${name}</option>` );
 				 }, "" );
 }
 
+/**
+ * Get the currently active timezone.
+ *
+ * @returns {string|null}
+ */
+function getCurrentTimeZone() {
+	const savedTimeZone = getSavedTimezone();
+
+	if ( savedTimeZone ) {
+		return savedTimeZone;
+	}
+
+	const userTimeZone = getCurrentUserTimezone();
+
+	if ( userTimeZone ) {
+		return userTimeZone;
+	}
+
+	return BMEvent.siteTimezone;
+
+}
+
+/**
+ * Guess the user's current timezone.
+ *
+ * @returns {*}
+ */
 function getCurrentUserTimezone() {
 	return moment.tz.guess();
 }
-
-const timezones = [
-	"Etc/GMT+12",
-	"Pacific/Midway",
-	"Pacific/Honolulu",
-	"America/Juneau",
-	"America/Dawson",
-	"America/Boise",
-	"America/Chihuahua",
-	"America/Phoenix",
-	"America/Chicago",
-	"America/Regina",
-	"America/Mexico_City",
-	"America/Belize",
-	"America/Detroit",
-	"America/Indiana/Indianapolis",
-	"America/Bogota",
-	"America/Glace_Bay",
-	"America/Caracas",
-	"America/Santiago",
-	"America/St_Johns",
-	"America/Sao_Paulo",
-	"America/Argentina/Buenos_Aires",
-	"America/Godthab",
-	"Etc/GMT+2",
-	"Atlantic/Azores",
-	"Atlantic/Cape_Verde",
-	"GMT",
-	"Africa/Casablanca",
-	"Atlantic/Canary",
-	"Europe/Belgrade",
-	"Europe/Sarajevo",
-	"Europe/Brussels",
-	"Europe/Amsterdam",
-	"Africa/Algiers",
-	"Europe/Bucharest",
-	"Africa/Cairo",
-	"Europe/Helsinki",
-	"Europe/Athens",
-	"Asia/Jerusalem",
-	"Africa/Harare",
-	"Europe/Moscow",
-	"Asia/Kuwait",
-	"Africa/Nairobi",
-	"Asia/Baghdad",
-	"Asia/Tehran",
-	"Asia/Dubai",
-	"Asia/Baku",
-	"Asia/Kabul",
-	"Asia/Yekaterinburg",
-	"Asia/Karachi",
-	"Asia/Kolkata",
-	"Asia/Kathmandu",
-	"Asia/Dhaka",
-	"Asia/Colombo",
-	"Asia/Almaty",
-	"Asia/Rangoon",
-	"Asia/Bangkok",
-	"Asia/Krasnoyarsk",
-	"Asia/Shanghai",
-	"Asia/Kuala_Lumpur",
-	"Asia/Taipei",
-	"Australia/Perth",
-	"Asia/Irkutsk",
-	"Asia/Seoul",
-	"Asia/Tokyo",
-	"Asia/Yakutsk",
-	"Australia/Darwin",
-	"Australia/Adelaide",
-	"Australia/Sydney",
-	"Australia/Brisbane",
-	"Australia/Hobart",
-	"Asia/Vladivostok",
-	"Pacific/Guam",
-	"Asia/Magadan",
-	"Pacific/Fiji",
-	"Pacific/Auckland",
-	"Pacific/Tongatapu"
-];
-
-const i18n = {
-	"Etc/GMT+12": "International Date Line West",
-	"Pacific/Midway": "Midway Island, Samoa",
-	"Pacific/Honolulu": "Hawaii",
-	"America/Juneau": "Alaska",
-	"America/Dawson": "Pacific Time (US and Canada); Tijuana",
-	"America/Boise": "Mountain Time (US and Canada)",
-	"America/Chihuahua": "Chihuahua, La Paz, Mazatlan",
-	"America/Phoenix": "Arizona",
-	"America/Chicago": "Central Time (US and Canada)",
-	"America/Regina": "Saskatchewan",
-	"America/Mexico_City": "Guadalajara, Mexico City, Monterrey",
-	"America/Belize": "Central America",
-	"America/Detroit": "Eastern Time (US and Canada)",
-	"America/Indiana/Indianapolis": "Indiana (East)",
-	"America/Bogota": "Bogota, Lima, Quito",
-	"America/Glace_Bay": "Atlantic Time (Canada)",
-	"America/Caracas": "Caracas, La Paz",
-	"America/Santiago": "Santiago",
-	"America/St_Johns": "Newfoundland and Labrador",
-	"America/Sao_Paulo": "Brasilia",
-	"America/Argentina/Buenos_Aires": "Buenos Aires, Georgetown",
-	"America/Godthab": "Greenland",
-	"Etc/GMT+2": "Mid-Atlantic",
-	"Atlantic/Azores": "Azores",
-	"Atlantic/Cape_Verde": "Cape Verde Islands",
-	"GMT": "Dublin, Edinburgh, Lisbon, London",
-	"Africa/Casablanca": "Casablanca, Monrovia",
-	"Atlantic/Canary": "Canary Islands",
-	"Europe/Belgrade": "Belgrade, Bratislava, Budapest, Ljubljana, Prague",
-	"Europe/Sarajevo": "Sarajevo, Skopje, Warsaw, Zagreb",
-	"Europe/Brussels": "Brussels, Copenhagen, Madrid, Paris",
-	"Europe/Amsterdam": "Amsterdam, Berlin, Bern, Rome, Stockholm, Vienna",
-	"Africa/Algiers": "West Central Africa",
-	"Europe/Bucharest": "Bucharest",
-	"Africa/Cairo": "Cairo",
-	"Europe/Helsinki": "Helsinki, Kiev, Riga, Sofia, Tallinn, Vilnius",
-	"Europe/Athens": "Athens, Istanbul, Minsk",
-	"Asia/Jerusalem": "Jerusalem",
-	"Africa/Harare": "Harare, Pretoria",
-	"Europe/Moscow": "Moscow, St. Petersburg, Volgograd",
-	"Asia/Kuwait": "Kuwait, Riyadh",
-	"Africa/Nairobi": "Nairobi",
-	"Asia/Baghdad": "Baghdad",
-	"Asia/Tehran": "Tehran",
-	"Asia/Dubai": "Abu Dhabi, Muscat",
-	"Asia/Baku": "Baku, Tbilisi, Yerevan",
-	"Asia/Kabul": "Kabul",
-	"Asia/Yekaterinburg": "Ekaterinburg",
-	"Asia/Karachi": "Islamabad, Karachi, Tashkent",
-	"Asia/Kolkata": "Chennai, Kolkata, Mumbai, New Delhi",
-	"Asia/Kathmandu": "Kathmandu",
-	"Asia/Dhaka": "Astana, Dhaka",
-	"Asia/Colombo": "Sri Jayawardenepura",
-	"Asia/Almaty": "Almaty, Novosibirsk",
-	"Asia/Rangoon": "Yangon Rangoon",
-	"Asia/Bangkok": "Bangkok, Hanoi, Jakarta",
-	"Asia/Krasnoyarsk": "Krasnoyarsk",
-	"Asia/Shanghai": "Beijing, Chongqing, Hong Kong SAR, Urumqi",
-	"Asia/Kuala_Lumpur": "Kuala Lumpur, Singapore",
-	"Asia/Taipei": "Taipei",
-	"Australia/Perth": "Perth",
-	"Asia/Irkutsk": "Irkutsk, Ulaanbaatar",
-	"Asia/Seoul": "Seoul",
-	"Asia/Tokyo": "Osaka, Sapporo, Tokyo",
-	"Asia/Yakutsk": "Yakutsk",
-	"Australia/Darwin": "Darwin",
-	"Australia/Adelaide": "Adelaide",
-	"Australia/Sydney": "Canberra, Melbourne, Sydney",
-	"Australia/Brisbane": "Brisbane",
-	"Australia/Hobart": "Hobart",
-	"Asia/Vladivostok": "Vladivostok",
-	"Pacific/Guam": "Guam, Port Moresby",
-	"Asia/Magadan": "Magadan, Solomon Islands, New Caledonia",
-	"Pacific/Fiji": "Fiji Islands, Kamchatka, Marshall Islands",
-	"Pacific/Auckland": "Auckland, Wellington",
-	"Pacific/Tongatapu": "Nuku'alofa"
-};
