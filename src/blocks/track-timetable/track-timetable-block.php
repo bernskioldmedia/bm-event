@@ -84,7 +84,7 @@ class Track_Timetable_Block extends Block {
 
 		$posts = self::get_query( $attributes );
 
-		$classes   = [ 'session-list' ];
+		$classes   = [ 'sessions' ];
 		$classes[] = 'is-style-' . self::get_style( $attributes );
 		$classes   = implode( ' ', $classes );
 

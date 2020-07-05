@@ -14,6 +14,10 @@
 	border: 1px solid #dddddd;
 	background-color: #ffffff;
 	min-width: 20rem;
+
+	&:last-child {
+		margin-bottom: 1.5rem;
+	}
 }
 
 .session-grid-item-figure {
