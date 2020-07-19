@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.1.1] - 2020-07-19
+
+### Changed
+- Now using the plugin base with helper features.
+
+### Fixed
+- Fatal error where required function was missing.
+
 ## [1.1.0] - 2020-07-05
 
 ### Added
