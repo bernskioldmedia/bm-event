@@ -150,7 +150,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 
 		acf_add_local_field_group( [
 			'key'                   => 'group_5ecd10dd8ae8c',
-			'title'                 => __( 'Information', 'bm-event' ),
+			'title'                 => __( 'Speaker Information', 'bm-event' ),
 			'fields'                => [
 				[
 					'key'               => 'field_5ecd10ed0934b',
@@ -158,7 +158,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 					'name'              => 'speaker_first_name',
 					'type'              => 'text',
 					'instructions'      => '',
-					'required'          => 0,
+					'required'          => 1,
 					'conditional_logic' => 0,
 					'wrapper'           => [
 						'width' => '',
@@ -177,7 +177,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 					'name'              => 'speaker_last_name',
 					'type'              => 'text',
 					'instructions'      => '',
-					'required'          => 0,
+					'required'          => 1,
 					'conditional_logic' => 0,
 					'wrapper'           => [
 						'width' => '',
@@ -233,7 +233,8 @@ class Speaker extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'Short Biography', 'bm-event' ),
 					'name'              => 'speaker_short_biography',
 					'type'              => 'textarea',
-					'instructions'      => '',
+					'instructions'      => __( 'The main content will be shown on the speaker page, the short description can be shown in grids and lists and on sessions.',
+						'bm-events' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -261,7 +262,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 			'position'              => 'side',
 			'style'                 => 'default',
 			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
+			'instruction_placement' => 'field',
 			'hide_on_screen'        => '',
 			'active'                => true,
 			'description'           => __( 'Information about the speaker.', 'bm-event' ),
@@ -269,7 +270,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 
 		acf_add_local_field_group( [
 			'key'                   => 'group_5ecd11333e809',
-			'title'                 => __( 'Contact & Social', 'bm-event' ),
+			'title'                 => __( 'Contact & Social Media', 'bm-event' ),
 			'fields'                => [
 				[
 					'key'               => 'field_5ecd113fc2946',
@@ -285,14 +286,14 @@ class Speaker extends Abstracts\Custom_Post_Type {
 						'id'    => '',
 					],
 					'default_value'     => '',
-					'placeholder'       => '',
+					'placeholder'       => 'https://',
 				],
 				[
 					'key'               => 'field_5ecd114ac2947',
 					'label'             => __( 'Twitter Username', 'bm-event' ),
 					'name'              => 'speaker_twitter_handle',
 					'type'              => 'text',
-					'instructions'      => '',
+					'instructions'      => __( 'Please enter the username without the @. The link to the profile will be automatically created.', 'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -311,7 +312,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'Facebook Page URL', 'bm-event' ),
 					'name'              => 'speaker_facebook_url',
 					'type'              => 'url',
-					'instructions'      => '',
+					'instructions'      => __( 'Please enter the full URL to the speaker\'s Facebook page.', 'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -320,14 +321,14 @@ class Speaker extends Abstracts\Custom_Post_Type {
 						'id'    => '',
 					],
 					'default_value'     => '',
-					'placeholder'       => '',
+					'placeholder'       => 'https://facebook.com/*******',
 				],
 				[
 					'key'               => 'field_5ecd1176c2949',
 					'label'             => __( 'Instagram Username', 'bm-event' ),
 					'name'              => 'speaker_instagram_username',
 					'type'              => 'text',
-					'instructions'      => '',
+					'instructions'      => __( 'Please enter only the username without the @. The link will be automatically created.', 'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -346,7 +347,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'YouTube Channel URL', 'bm-event' ),
 					'name'              => 'speaker_youtube_url',
 					'type'              => 'url',
-					'instructions'      => '',
+					'instructions'      => __( 'Please enter the full URL to the speaker\'s YouTube channel.', 'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -355,14 +356,14 @@ class Speaker extends Abstracts\Custom_Post_Type {
 						'id'    => '',
 					],
 					'default_value'     => '',
-					'placeholder'       => '',
+					'placeholder'       => 'https://www.youtube.com/c/*****',
 				],
 				[
 					'key'               => 'field_5ecd11e174dd5',
 					'label'             => __( 'LinkedIn URL', 'bm-event' ),
 					'name'              => 'speaker_linkedin_url',
 					'type'              => 'url',
-					'instructions'      => '',
+					'instructions'      => __( 'Please enter the full URL to the speaker\'s LinkedIn profile.', 'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -371,7 +372,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 						'id'    => '',
 					],
 					'default_value'     => '',
-					'placeholder'       => '',
+					'placeholder'       => 'https://linkedin.com/*****',
 				],
 			],
 			'location'              => [
@@ -387,7 +388,7 @@ class Speaker extends Abstracts\Custom_Post_Type {
 			'position'              => 'side',
 			'style'                 => 'default',
 			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
+			'instruction_placement' => 'field',
 			'hide_on_screen'        => '',
 			'active'                => true,
 			'description'           => __( 'Contact and social media details for speakers.', 'bm-event' ),
