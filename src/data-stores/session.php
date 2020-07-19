@@ -171,7 +171,7 @@ class Session extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'Topic', 'bm-event' ),
 					'name'              => 'session_topic',
 					'type'              => 'text',
-					'instructions'      => '',
+					'instructions'      => __( 'Optionally prepend the title with a topic which will be shown above in small text.', 'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -190,7 +190,7 @@ class Session extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'Short Description', 'bm-event' ),
 					'name'              => 'session_short_description',
 					'type'              => 'textarea',
-					'instructions'      => '',
+					'instructions'      => __( 'The main content will be shown on the single event. This short description will show in lists and session tables.', 'bm-events' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -201,7 +201,7 @@ class Session extends Abstracts\Custom_Post_Type {
 					'default_value'     => '',
 					'placeholder'       => '',
 					'maxlength'         => '',
-					'rows'              => 3,
+					'rows'              => 4,
 					'new_lines'         => '',
 				],
 				[
@@ -209,7 +209,7 @@ class Session extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'Session Type', 'bm-event' ),
 					'name'              => 'session_type',
 					'type'              => 'radio',
-					'instructions'      => '',
+					'instructions'      => __( 'The visual style on the page might differ depending on the session type.', 'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -242,7 +242,7 @@ class Session extends Abstracts\Custom_Post_Type {
 			'position'              => 'side',
 			'style'                 => 'default',
 			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
+			'instruction_placement' => 'field',
 			'hide_on_screen'        => '',
 			'active'                => true,
 			'description'           => __( 'Information about a session.', 'bm-event' ),
@@ -257,8 +257,8 @@ class Session extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'Date', 'bm-event' ),
 					'name'              => 'session_date',
 					'type'              => 'date_picker',
-					'instructions'      => '',
-					'required'          => 0,
+					'instructions'      => __( 'On which date will this session take place? Dates are used for calendar sync and multi-day tables.', 'bm-event' ),
+					'required'          => 1,
 					'conditional_logic' => 0,
 					'wrapper'           => [
 						'width' => '',
@@ -274,8 +274,8 @@ class Session extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'Start Time', 'bm-event' ),
 					'name'              => 'session_start_time',
 					'type'              => 'time_picker',
-					'instructions'      => '',
-					'required'          => 0,
+					'instructions'      => __( 'Enter the time the session is supposed to start at.', 'bm-event' ),
+					'required'          => 1,
 					'conditional_logic' => 0,
 					'wrapper'           => [
 						'width' => '',
@@ -290,7 +290,8 @@ class Session extends Abstracts\Custom_Post_Type {
 					'label'             => __( 'End Time', 'bm-event' ),
 					'name'              => 'session_end_time',
 					'type'              => 'time_picker',
-					'instructions'      => '',
+					'instructions'      => __( 'Setting an end time for the session is optional but recommended as the information is helpful to the visitor and is used in the calendar sync.',
+						'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -315,7 +316,7 @@ class Session extends Abstracts\Custom_Post_Type {
 			'position'              => 'side',
 			'style'                 => 'default',
 			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
+			'instruction_placement' => 'field',
 			'hide_on_screen'        => '',
 			'active'                => true,
 			'description'           => __( 'Information about the session date and time.', 'bm-event' ),
@@ -327,10 +328,11 @@ class Session extends Abstracts\Custom_Post_Type {
 			'fields'                => [
 				[
 					'key'               => 'field_5ecd0e9a7f672',
-					'label'             => __( 'Speaker(s)', 'bm-event' ),
+					'label'             => __( 'Select Speaker(s)', 'bm-event' ),
 					'name'              => 'session_speakers_ids',
 					'type'              => 'post_object',
-					'instructions'      => '',
+					'instructions'      => __( 'Select one or more speakers that are hosting this session. Their information is automatically retrieved from their speaker entry. Create a speaker first under Speakers.',
+						'bm-event' ),
 					'required'          => 0,
 					'conditional_logic' => 0,
 					'wrapper'           => [
@@ -359,7 +361,7 @@ class Session extends Abstracts\Custom_Post_Type {
 			'position'              => 'side',
 			'style'                 => 'default',
 			'label_placement'       => 'top',
-			'instruction_placement' => 'label',
+			'instruction_placement' => 'field',
 			'hide_on_screen'        => '',
 			'active'                => true,
 			'description'           => __( 'Select speakers for sessions.', 'bm-event' ),
