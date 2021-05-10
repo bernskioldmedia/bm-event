@@ -250,7 +250,7 @@ class Session extends Abstracts\Custom_Post_Type {
 
 		acf_add_local_field_group( [
 			'key'                   => 'group_5ecd0f226b19a',
-			'title'                 => __( 'Information', 'bm-event' ),
+			'title'                 => __( 'Video', 'bm-event' ),
 			'fields'                => [
 				[
 					'key'               => 'field_5ecd10d06e751',

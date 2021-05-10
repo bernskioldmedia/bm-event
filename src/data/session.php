@@ -195,9 +195,9 @@ class Session extends Data {
 	}
 
 	public function get_youtube_id(): ?string {
-		$parsed = wp_parse_url( $this->get_embed_url(), PHP_URL_QUERY );
+		preg_match( '%(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $this->get_embed_url(), $match );
 
-		return $parsed['v'] ?? null;
+		return $match[1] ?? null;
 	}
 
 	public static function get_all(): array {
