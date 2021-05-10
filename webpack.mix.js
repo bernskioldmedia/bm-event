@@ -74,7 +74,7 @@ mix.js(
  * Block Editor Blocks
  */
 mix
-	.js( `src/blocks/track-timetable/track-timetable.js`, `dist` ).react();
+	.react( `src/blocks/track-timetable/track-timetable.js`, `dist` );
 
 /**
  * Vendor JavaScript

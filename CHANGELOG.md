@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.2.1] - 2021-05-11
+
+### Fixed
+
+- Build failed because of incorrect syntax.
+
 ## [1.2.0] - 2021-05-10
 
 ### Added
