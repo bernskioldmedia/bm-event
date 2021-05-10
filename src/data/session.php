@@ -10,6 +10,7 @@
 namespace BernskioldMedia\WP\Event\Data;
 
 use BernskioldMedia\WP\Event\Abstracts\Data;
+use WP_Query;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -197,6 +198,79 @@ class Session extends Data {
 		$parsed = wp_parse_url( $this->get_embed_url(), PHP_URL_QUERY );
 
 		return $parsed['v'] ?? null;
+	}
+
+	public static function get_all(): array {
+		$sessions = new WP_Query( [
+			'post_type'      => 'session',
+			'orderby'        => 'meta_value',
+			'meta_key'       => 'session_start_time',
+			'meta_type'      => 'TIME',
+			'order'          => 'ASC',
+			'posts_per_page' => 100,
+		] );
+
+		return $sessions->get_posts();
+	}
+
+	public function get_prev_next(): array {
+		$sessions        = wp_list_pluck( self::get_all(), 'ID' );
+		$key_for_session = array_search( $this->get_id(), $sessions, true );
+		$keys            = self::array_neighbor( $sessions, $key_for_session, true );
+
+		return [
+			'next' => $sessions[ $keys['prev'] ],
+			'prev' => $sessions[ $keys['next'] ],
+		];
+	}
+
+	/**
+	 * Function to get array keys on either side of a given key. If the
+	 * initial key is first in the array then prev is null. If the initial
+	 * key is last in the array, then next is null.
+	 *
+	 * If wrap is true and the initial key is last, then next is the first
+	 * element in the array.
+	 *
+	 * If wrap is true and the initial key is first, then prev is the last
+	 * element in the array.
+	 *
+	 * @param  array  $arr
+	 * @param  string  $key
+	 * @param  bool  $wrap
+	 *
+	 * @return array $return
+	 */
+	public static function array_neighbor( array $arr, string $key, bool $wrap = false ): array {
+
+		krsort( $arr );
+		$keys       = array_keys( $arr );
+		$keyIndexes = array_flip( $keys );
+
+		$return = [];
+		if ( isset( $keys[ $keyIndexes[ $key ] - 1 ] ) ) {
+			$return['prev'] = $keys[ $keyIndexes[ $key ] - 1 ];
+		} else {
+			$return['prev'] = null;
+		}
+
+		if ( isset( $keys[ $keyIndexes[ $key ] + 1 ] ) ) {
+			$return['next'] = $keys[ $keyIndexes[ $key ] + 1 ];
+		} else {
+			$return['next'] = null;
+		}
+
+		if ( false !== $wrap && empty( $return['prev'] ) ) {
+			$end            = end( $arr );
+			$return['prev'] = key( $arr );
+		}
+
+		if ( false !== $wrap && empty( $return['next'] ) ) {
+			$beginning      = reset( $arr );
+			$return['next'] = key( $arr );
+		}
+
+		return $return;
 	}
 
 }
