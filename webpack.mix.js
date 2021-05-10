@@ -61,12 +61,12 @@ if ( ! mix.inProduction() ) {
  * Internal JavaScript
  */
 mix.js(
-	`${assetPaths.scripts}/src/index.js`,
-	`${assetPaths.scripts}/dist/app.js`
+	`${ assetPaths.scripts }/src/index.js`,
+	`${ assetPaths.scripts }/dist/app.js`
    )
    .js(
-	   `${assetPaths.scripts}/src/admin.js`,
-	   `${assetPaths.scripts}/dist/admin-app.js`
+	   `${ assetPaths.scripts }/src/admin.js`,
+	   `${ assetPaths.scripts }/dist/admin-app.js`
    );
 
 
@@ -74,7 +74,7 @@ mix.js(
  * Block Editor Blocks
  */
 mix
-	.react( `src/blocks/track-timetable/track-timetable.js`, `dist` );
+	.js( `src/blocks/track-timetable/track-timetable.js`, `dist` ).react();
 
 /**
  * Vendor JavaScript
@@ -99,21 +99,21 @@ const sassConfig = {
 
 // Process the scss files.
 mix.sass(
-	`${assetPaths.styles}/src/app.scss`,
-	`${assetPaths.styles}/dist`,
+	`${ assetPaths.styles }/src/app.scss`,
+	`${ assetPaths.styles }/dist`,
 	sassConfig
    )
    .sass(
-	   `${assetPaths.styles}/src/admin.scss`,
-	   `${assetPaths.styles}/dist`,
+	   `${ assetPaths.styles }/src/admin.scss`,
+	   `${ assetPaths.styles }/dist`,
 	   sassConfig
    );
 
 // Process a version for IE11.
 if ( mix.inProduction() ) {
 	mix.sass(
-		`${assetPaths.styles}/src/app-ie11.scss`,
-		`${assetPaths.styles}/dist`,
+		`${ assetPaths.styles }/src/app-ie11.scss`,
+		`${ assetPaths.styles }/dist`,
 		sassConfig,
 		[
 			require( 'postcss-custom-properties' )(),
