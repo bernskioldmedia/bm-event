@@ -99,7 +99,7 @@ class Session extends Data {
 			return null;
 		}
 
-		return wp_date( $format, strtotime( $date ) );
+		return date( $format, strtotime( $date ) );
 	}
 
 	/**
@@ -116,7 +116,7 @@ class Session extends Data {
 			return null;
 		}
 
-		return wp_date( $format, strtotime( $time ) );
+		return date( $format, strtotime( $time ) );
 	}
 
 	/**
@@ -133,7 +133,7 @@ class Session extends Data {
 			return null;
 		}
 
-		return wp_date( $format, strtotime( $time ) );
+		return date( $format, strtotime( $time ) );
 	}
 
 	/**
@@ -187,6 +187,16 @@ class Session extends Data {
 	 */
 	public function get_booking_url(): ?string {
 		return $this->get_prop( 'session_booking_url' );
+	}
+
+	public function get_embed_url(): ?string {
+		return $this->get_prop( 'session_live_url' );
+	}
+
+	public function get_youtube_id(): ?string {
+		$parsed = wp_parse_url( $this->get_embed_url(), PHP_URL_QUERY );
+
+		return $parsed['v'] ?? null;
 	}
 
 }

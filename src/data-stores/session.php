@@ -249,6 +249,49 @@ class Session extends Abstracts\Custom_Post_Type {
 		] );
 
 		acf_add_local_field_group( [
+			'key'                   => 'group_5ecd0f226b19a',
+			'title'                 => __( 'Information', 'bm-event' ),
+			'fields'                => [
+				[
+					'key'               => 'field_5ecd10d06e751',
+					'label'             => __( 'Embed URL', 'bm-event' ),
+					'name'              => 'session_live_url',
+					'type'              => 'url',
+					'instructions'      => __( 'Enter a YouTube or Vimeo video URL to a recording or livestream URL.', 'bm-event' ),
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'default_value'     => '',
+					'placeholder'       => '',
+					'prepend'           => '',
+					'append'            => '',
+					'maxlength'         => '',
+				],
+			],
+			'location'              => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => self::get_key(),
+					],
+				],
+			],
+			'menu_order'            => 0,
+			'position'              => 'side',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'field',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => __( 'Recording or live event video.', 'bm-event' ),
+		] );
+
+		acf_add_local_field_group( [
 			'key'                   => 'group_5ecd095bf2280',
 			'title'                 => __( 'Date & Time', 'bm-event' ),
 			'fields'                => [
