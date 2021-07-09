@@ -4,24 +4,24 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f3d2146c27a2fe4fc4fb029d504dc524",
+    "content-hash": "5fb827fc9ae25f2b6c74b45b163faea1",
     "packages": [
         {
             "name": "bernskioldmedia/block-plugin-support",
-            "version": "1.4.2",
+            "version": "1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bernskioldmedia/Block-Plugin-Support.git",
-                "reference": "0534cf466c45e8381018ead61e2124176daea81d"
+                "reference": "b271288625e12a66e46986a6d4ee55f837e14b27"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bernskioldmedia/Block-Plugin-Support/zipball/0534cf466c45e8381018ead61e2124176daea81d",
-                "reference": "0534cf466c45e8381018ead61e2124176daea81d",
+                "url": "https://api.github.com/repos/bernskioldmedia/Block-Plugin-Support/zipball/b271288625e12a66e46986a6d4ee55f837e14b27",
+                "reference": "b271288625e12a66e46986a6d4ee55f837e14b27",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1"
+                "php": "^7.1|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -46,9 +46,9 @@
             "description": "A reusable way of adding block support to a WordPress plugin.",
             "support": {
                 "issues": "https://github.com/bernskioldmedia/Block-Plugin-Support/issues",
-                "source": "https://github.com/bernskioldmedia/Block-Plugin-Support/tree/1.4.2"
+                "source": "https://github.com/bernskioldmedia/Block-Plugin-Support/tree/1.4.3"
             },
-            "time": "2021-05-06T16:29:55+00:00"
+            "time": "2021-05-30T14:24:42+00:00"
         },
         {
             "name": "bernskioldmedia/wp-plugin-base",
@@ -250,16 +250,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.26.0",
+            "version": "1.26.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "2209ddd84e7ef1256b7af205d0717fb62cfc9c33"
+                "reference": "c6b00f05152ae2c9b04a448f99c7590beb6042f5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/2209ddd84e7ef1256b7af205d0717fb62cfc9c33",
-                "reference": "2209ddd84e7ef1256b7af205d0717fb62cfc9c33",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c6b00f05152ae2c9b04a448f99c7590beb6042f5",
+                "reference": "c6b00f05152ae2c9b04a448f99c7590beb6042f5",
                 "shasum": ""
             },
             "require": {
@@ -320,7 +320,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/1.26.0"
+                "source": "https://github.com/Seldaek/monolog/tree/1.26.1"
             },
             "funding": [
                 {
@@ -332,7 +332,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-14T12:56:38+00:00"
+            "time": "2021-05-28T08:32:12+00:00"
         },
         {
             "name": "psr/log",
@@ -392,7 +392,7 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.4"
+        "php": ">=7.4|^8.0"
     },
     "platform-dev": [],
     "plugin-api-version": "2.0.0"

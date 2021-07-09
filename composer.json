@@ -6,7 +6,7 @@
     "bernskioldmedia/wp-plugin-base": "~1.0",
     "bernskioldmedia/block-plugin-support": "^1.0",
     "composer/installers": "~1.0",
-    "php": ">=7.4"
+    "php": ">=7.4|^8.0"
   },
   "license": "GPL-3.0+",
   "authors": [

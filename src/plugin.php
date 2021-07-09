@@ -26,7 +26,7 @@ class Plugin extends Base_Plugin {
 	 *
 	 * @var string
 	 */
-	protected static $version = '1.2.1';
+	protected static $version = '1.2.2';
 
 	/**
 	 * Database Version
