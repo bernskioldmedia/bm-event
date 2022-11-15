@@ -55,6 +55,8 @@ class Session extends Abstracts\Custom_Post_Type {
 		'date',
 		'start_time',
 		'end_time',
+		'start_datetime',
+		'end_datetime',
 		'speakers',
 	];
 
@@ -344,6 +346,65 @@ class Session extends Abstracts\Custom_Post_Type {
 					],
 					'display_format'    => 'H:i',
 					'return_format'     => 'H:i',
+				],
+			],
+			'location'              => [
+				[
+					[
+						'param'    => 'post_type',
+						'operator' => '==',
+						'value'    => self::get_key(),
+					],
+				],
+			],
+			'menu_order'            => 5,
+			'position'              => 'side',
+			'style'                 => 'default',
+			'label_placement'       => 'top',
+			'instruction_placement' => 'field',
+			'hide_on_screen'        => '',
+			'active'                => true,
+			'description'           => __( 'Information about the session date and time.', 'bm-event' ),
+		] );
+
+		acf_add_local_field_group( [
+			'key'                   => 'group_637238a0eca63',
+			'title'                 => __( 'Date & Time', 'bm-event' ),
+			'fields'                => [
+				[
+					'key'               => 'field_637238add4319',
+					'label'             => __( 'Start Date and Time', 'bm-event' ),
+					'name'              => 'session_start_datetime',
+					'type'              => 'date_time_picker',
+					'instructions'      => __( 'On which date and time will this session take place?', 'bm-event' ),
+					'required'          => 1,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'display_format' => 'Y-m-d H:i:s',
+					'return_format' => 'Y-m-d H:i:s',
+					'first_day' => 1,
+				],
+				[
+					'key'               => 'field_637238fd1b720',
+					'label'             => __( 'End Date and Time', 'bm-event' ),
+					'name'              => 'session_end_datetime',
+					'type'              => 'date_time_picker',
+					'instructions'      => __( 'Setting an end time for the session is optional but recommended as the information is helpful to the visitor and is used in the calendar sync.',
+						'bm-event' ),
+					'required'          => 0,
+					'conditional_logic' => 0,
+					'wrapper'           => [
+						'width' => '',
+						'class' => '',
+						'id'    => '',
+					],
+					'display_format' => 'Y-m-d H:i:s',
+					'return_format' => 'Y-m-d H:i:s',
+					'first_day' => 1,
 				],
 			],
 			'location'              => [
