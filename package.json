@@ -62,7 +62,7 @@
   "dependencies": {
     "classnames": "^2.3.1",
     "js-cookie": "^2.2.1",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.33",
     "select2": "^4.0.13"
   }
