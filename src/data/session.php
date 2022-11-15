@@ -104,6 +104,40 @@ class Session extends Data {
 	}
 
 	/**
+	 * Get the start date the session is at.
+	 *
+	 * @param  string  $format  date() compatible string.
+	 *
+	 * @return string|null
+	 */
+	public function get_start_date_from_datetime( string $format = 'Y-m-d' ): ?string {
+		$date = $this->get_prop( 'session_start_datetime' );
+
+		if ( ! $date ) {
+			return null;
+		}
+
+		return date( $format, strtotime( $date ) );
+	}
+
+	/**
+	 * Get the end date the session is at.
+	 *
+	 * @param  string  $format  date() compatible string.
+	 *
+	 * @return string|null
+	 */
+	public function get_end_date_from_datetime( string $format = 'Y-m-d' ): ?string {
+		$date = $this->get_prop( 'session_end_datetime' );
+
+		if ( ! $date ) {
+			return null;
+		}
+
+		return date( $format, strtotime( $date ) );
+	}
+
+	/**
 	 * Get the time when the session starts.
 	 *
 	 * @param  string  $format  date() compatible format.
@@ -121,6 +155,33 @@ class Session extends Data {
 	}
 
 	/**
+	 * Get the time when the session starts.
+	 *
+	 * @param  string  $format  date() compatible format.
+	 *
+	 * @return string|null
+	 */
+	public function get_start_time_from_datetime( string $format = 'H:i' ): ?string {
+		$time = $this->get_prop( 'session_start_datetime' );
+
+		if ( ! $time ) {
+			return null;
+		}
+
+		return date( $format, strtotime( $time ) );
+	}
+
+	public function get_start_datetime( ): ?string {
+		$time = $this->get_prop( 'session_start_datetime' );
+
+		if ( ! $time ) {
+			return null;
+		}
+
+		return date( $time );
+	}
+
+	/**
 	 * Get the time when the session ends.
 	 *
 	 * @param  string  $format  date() compatible format.
@@ -135,6 +196,33 @@ class Session extends Data {
 		}
 
 		return date( $format, strtotime( $time ) );
+	}
+
+	/**
+	 * Get the time when the session ends.
+	 *
+	 * @param  string  $format  date() compatible format.
+	 *
+	 * @return string|null
+	 */
+	public function get_end_time_from_datetime( string $format = 'H:i' ): ?string {
+		$time = $this->get_prop( 'session_end_datetime' );
+
+		if ( ! $time ) {
+			return null;
+		}
+
+		return date( $format, strtotime( $time ) );
+	}
+
+	public function get_end_datetime( ): ?string {
+		$time = $this->get_prop( 'session_end_datetime' );
+
+		if ( ! $time ) {
+			return null;
+		}
+
+		return date( $time );
 	}
 
 	/**
@@ -200,15 +288,24 @@ class Session extends Data {
 		return $match[1] ?? null;
 	}
 
-	public static function get_all(): array {
-		$sessions = new WP_Query( [
+	public static function get_all( array $args = [] ): array {
+		$query_args = [
 			'post_type'      => 'session',
 			'orderby'        => 'meta_value',
 			'meta_key'       => 'session_start_time',
 			'meta_type'      => 'TIME',
 			'order'          => 'ASC',
 			'posts_per_page' => 100,
-		] );
+		];
+
+
+		if( !empty( $args )){
+			foreach( $args as $key => $value ){
+				$query_args[$key] = $value;
+			}
+		}
+
+		$sessions = new WP_Query( $query_args );
 
 		return $sessions->get_posts();
 	}
@@ -271,6 +368,10 @@ class Session extends Data {
 		}
 
 		return $return;
+	}
+
+	public static function get_current_or_next_session(){
+
 	}
 
 }

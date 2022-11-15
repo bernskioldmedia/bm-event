@@ -7,6 +7,8 @@ use BernskioldMedia\WP\Event\Blocks\Track_Timetable\Track_Timetable_Block;
 use BernskioldMedia\WP\Event\Data_Stores\Session;
 use BernskioldMedia\WP\Event\Data_Stores\Speaker;
 use BernskioldMedia\WP\Event\Data_Stores\Track;
+use BernskioldMedia\WP\Event\Rest\NextVideo;
+use BernskioldMedia\WP\Event\Rest\SessionGrid;
 use BernskioldMedia\WP\PluginBase\Abstracts\Base_Plugin;
 use BernskioldMedia\WP\PluginBase\Traits\Has_Data_Stores;
 
@@ -26,7 +28,7 @@ class Plugin extends Base_Plugin {
 	 *
 	 * @var string
 	 */
-	protected static $version = '1.2.2';
+	protected static $version = '1.2.3';
 
 	/**
 	 * Database Version
@@ -89,6 +91,10 @@ class Plugin extends Base_Plugin {
 
 		add_filter( 'block_categories', [ self::class, 'setup_block_categories' ] );
 		Assets::hooks();
+		Shortcodes::hooks();
+
+		(new NextVideo())->load();
+		(new SessionGrid())->load();
 
 		do_action( 'bm_event_init' );
 	}
@@ -128,13 +134,18 @@ class Plugin extends Base_Plugin {
 	 *
 	 * @param  string  $template_name
 	 */
-	public static function load_template( $template_name ): void {
+	public static function load_template( $template_name, $variables = [] ): void {
+
+		if($variables) {
+			extract($variables);
+		}
+
 		$located = locate_template( 'components/' . $template_name );
 
 		if ( $located ) {
-			require $located;
+			include $located;
 		} else {
-			require self::get_path( 'views/' . $template_name . '.php' );
+			include self::get_path( 'views/' . $template_name . '.php' );
 		}
 
 	}

@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.2.3] - 2022-11-14
+### Added
+- Added timezone switcher
+- Added section grid
+- Added liveview script
+- Added new datetime fields for the event
+
 ## [1.2.2] - 2021-07-09
 
 ### Added

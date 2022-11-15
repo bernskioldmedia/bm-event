@@ -67,7 +67,15 @@ mix.js(
    .js(
 	   `${ assetPaths.scripts }/src/admin.js`,
 	   `${ assetPaths.scripts }/dist/admin-app.js`
-   );
+   )
+	.js(
+		`${ assetPaths.scripts }/src/live-viewer.js`,
+		`${ assetPaths.scripts }/dist/live-viewer.js`
+	)
+	.js(
+		`${ assetPaths.scripts }/src/time-switcher.js`,
+		`${ assetPaths.scripts }/dist/time-switcher.js`
+	);
 
 
 /**

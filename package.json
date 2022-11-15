@@ -1,6 +1,6 @@
 {
   "name": "bm-event",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Functionality to help you market and manage an event. From showing speakers to a live agenda for one or multiple days.",
   "main": "assets/scripts/src/index.js",
   "scripts": {
