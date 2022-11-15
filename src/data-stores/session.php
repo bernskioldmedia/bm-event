@@ -150,10 +150,20 @@ class Session extends Abstracts\Custom_Post_Type {
 			return $query;
 		}
 
-		$query->set( 'orderby', 'meta_value' );
-		$query->set( 'meta_type', 'TIME' );
-		$query->set( 'meta_key', 'session_start_time' );
-		$query->set( 'order', 'ASC' );
+		$site = get_site(get_current_blog_id());
+
+		// Yes...we are really doing this to migrate to a new structure!
+		if(strtotime($site->registered) >= strtotime('2022-07-01')) {
+			$query->set( 'orderby', 'meta_value' );
+			$query->set( 'meta_type', 'DATETIME' );
+			$query->set( 'meta_key', 'session_start_datetime' );
+			$query->set( 'order', 'ASC' );
+		} else {
+			$query->set( 'orderby', 'meta_value' );
+			$query->set( 'meta_type', 'TIME' );
+			$query->set( 'meta_key', 'session_start_time' );
+			$query->set( 'order', 'ASC' );
+		}
 
 		return $query;
 
@@ -163,6 +173,8 @@ class Session extends Abstracts\Custom_Post_Type {
 	 * Meta Fields via Advanced Custom Fields
 	 */
 	public static function fields(): void {
+
+		$site = get_site(get_current_blog_id());
 
 		acf_add_local_field_group( [
 			'key'                   => 'group_5ecd0f226b78d',
@@ -293,138 +305,144 @@ class Session extends Abstracts\Custom_Post_Type {
 			'description'           => __( 'Recording or live event video.', 'bm-event' ),
 		] );
 
-		acf_add_local_field_group( [
-			'key'                   => 'group_5ecd095bf2280',
-			'title'                 => __( 'Date & Time', 'bm-event' ),
-			'fields'                => [
-				[
-					'key'               => 'field_5ecd0e50cafde',
-					'label'             => __( 'Date', 'bm-event' ),
-					'name'              => 'session_date',
-					'type'              => 'date_picker',
-					'instructions'      => __( 'On which date will this session take place? Dates are used for calendar sync and multi-day tables.', 'bm-event' ),
-					'required'          => 1,
-					'conditional_logic' => 0,
-					'wrapper'           => [
-						'width' => '',
-						'class' => '',
-						'id'    => '',
-					],
-					'display_format'    => 'Y-m-d',
-					'return_format'     => 'Ymd',
-					'first_day'         => 1,
-				],
-				[
-					'key'               => 'field_5ecd0e68cafdf',
-					'label'             => __( 'Start Time', 'bm-event' ),
-					'name'              => 'session_start_time',
-					'type'              => 'time_picker',
-					'instructions'      => __( 'Enter the time the session is supposed to start at.', 'bm-event' ),
-					'required'          => 1,
-					'conditional_logic' => 0,
-					'wrapper'           => [
-						'width' => '',
-						'class' => '',
-						'id'    => '',
-					],
-					'display_format'    => 'H:i',
-					'return_format'     => 'H:i',
-				],
-				[
-					'key'               => 'field_5ecd0e89cafe0',
-					'label'             => __( 'End Time', 'bm-event' ),
-					'name'              => 'session_end_time',
-					'type'              => 'time_picker',
-					'instructions'      => __( 'Setting an end time for the session is optional but recommended as the information is helpful to the visitor and is used in the calendar sync.',
-						'bm-event' ),
-					'required'          => 0,
-					'conditional_logic' => 0,
-					'wrapper'           => [
-						'width' => '',
-						'class' => '',
-						'id'    => '',
-					],
-					'display_format'    => 'H:i',
-					'return_format'     => 'H:i',
-				],
-			],
-			'location'              => [
-				[
+		if(strtotime($site->registered) <= strtotime('2022-07-01')) {
+			acf_add_local_field_group([
+				'key' => 'group_5ecd095bf2280',
+				'title' => __('Date & Time', 'bm-event'),
+				'fields' => [
 					[
-						'param'    => 'post_type',
-						'operator' => '==',
-						'value'    => self::get_key(),
+						'key' => 'field_5ecd0e50cafde',
+						'label' => __('Date', 'bm-event'),
+						'name' => 'session_date',
+						'type' => 'date_picker',
+						'instructions' => __('On which date will this session take place? Dates are used for calendar sync and multi-day tables.',
+							'bm-event'),
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => [
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						],
+						'display_format' => 'Y-m-d',
+						'return_format' => 'Ymd',
+						'first_day' => 1,
+					],
+					[
+						'key' => 'field_5ecd0e68cafdf',
+						'label' => __('Start Time', 'bm-event'),
+						'name' => 'session_start_time',
+						'type' => 'time_picker',
+						'instructions' => __('Enter the time the session is supposed to start at.', 'bm-event'),
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => [
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						],
+						'display_format' => 'H:i',
+						'return_format' => 'H:i',
+					],
+					[
+						'key' => 'field_5ecd0e89cafe0',
+						'label' => __('End Time', 'bm-event'),
+						'name' => 'session_end_time',
+						'type' => 'time_picker',
+						'instructions' => __('Setting an end time for the session is optional but recommended as the information is helpful to the visitor and is used in the calendar sync.',
+							'bm-event'),
+						'required' => 0,
+						'conditional_logic' => 0,
+						'wrapper' => [
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						],
+						'display_format' => 'H:i',
+						'return_format' => 'H:i',
 					],
 				],
-			],
-			'menu_order'            => 5,
-			'position'              => 'side',
-			'style'                 => 'default',
-			'label_placement'       => 'top',
-			'instruction_placement' => 'field',
-			'hide_on_screen'        => '',
-			'active'                => true,
-			'description'           => __( 'Information about the session date and time.', 'bm-event' ),
-		] );
+				'location' => [
+					[
+						[
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => self::get_key(),
+						],
+					],
+				],
+				'menu_order' => 5,
+				'position' => 'side',
+				'style' => 'default',
+				'label_placement' => 'top',
+				'instruction_placement' => 'field',
+				'hide_on_screen' => '',
+				'active' => true,
+				'description' => __('Information about the session date and time.', 'bm-event'),
+			]);
+		}
 
-		acf_add_local_field_group( [
-			'key'                   => 'group_637238a0eca63',
-			'title'                 => __( 'Date & Time', 'bm-event' ),
-			'fields'                => [
-				[
-					'key'               => 'field_637238add4319',
-					'label'             => __( 'Start Date and Time', 'bm-event' ),
-					'name'              => 'session_start_datetime',
-					'type'              => 'date_time_picker',
-					'instructions'      => __( 'On which date and time will this session take place?', 'bm-event' ),
-					'required'          => 1,
-					'conditional_logic' => 0,
-					'wrapper'           => [
-						'width' => '',
-						'class' => '',
-						'id'    => '',
-					],
-					'display_format' => 'Y-m-d H:i:s',
-					'return_format' => 'Y-m-d H:i:s',
-					'first_day' => 1,
-				],
-				[
-					'key'               => 'field_637238fd1b720',
-					'label'             => __( 'End Date and Time', 'bm-event' ),
-					'name'              => 'session_end_datetime',
-					'type'              => 'date_time_picker',
-					'instructions'      => __( 'Setting an end time for the session is optional but recommended as the information is helpful to the visitor and is used in the calendar sync.',
-						'bm-event' ),
-					'required'          => 0,
-					'conditional_logic' => 0,
-					'wrapper'           => [
-						'width' => '',
-						'class' => '',
-						'id'    => '',
-					],
-					'display_format' => 'Y-m-d H:i:s',
-					'return_format' => 'Y-m-d H:i:s',
-					'first_day' => 1,
-				],
-			],
-			'location'              => [
-				[
+		if(strtotime($site->registered) > strtotime('2022-07-01')) {
+
+			acf_add_local_field_group([
+				'key' => 'group_637238a0eca63',
+				'title' => __('Date & Time', 'bm-event'),
+				'fields' => [
 					[
-						'param'    => 'post_type',
-						'operator' => '==',
-						'value'    => self::get_key(),
+						'key' => 'field_637238add4319',
+						'label' => __('Start Date and Time', 'bm-event'),
+						'name' => 'session_start_datetime',
+						'type' => 'date_time_picker',
+						'instructions' => __('On which date and time will this session take place?', 'bm-event'),
+						'required' => 1,
+						'conditional_logic' => 0,
+						'wrapper' => [
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						],
+						'display_format' => 'Y-m-d H:i:s',
+						'return_format' => 'Y-m-d H:i:s',
+						'first_day' => 1,
+					],
+					[
+						'key' => 'field_637238fd1b720',
+						'label' => __('End Date and Time', 'bm-event'),
+						'name' => 'session_end_datetime',
+						'type' => 'date_time_picker',
+						'instructions' => __('Setting an end time for the session is optional but recommended as the information is helpful to the visitor and is used in the calendar sync.',
+							'bm-event'),
+						'required' => 1,
+						'conditional_logic' => 0,
+						'wrapper' => [
+							'width' => '',
+							'class' => '',
+							'id' => '',
+						],
+						'display_format' => 'Y-m-d H:i:s',
+						'return_format' => 'Y-m-d H:i:s',
+						'first_day' => 1,
 					],
 				],
-			],
-			'menu_order'            => 5,
-			'position'              => 'side',
-			'style'                 => 'default',
-			'label_placement'       => 'top',
-			'instruction_placement' => 'field',
-			'hide_on_screen'        => '',
-			'active'                => true,
-			'description'           => __( 'Information about the session date and time.', 'bm-event' ),
-		] );
+				'location' => [
+					[
+						[
+							'param' => 'post_type',
+							'operator' => '==',
+							'value' => self::get_key(),
+						],
+					],
+				],
+				'menu_order' => 5,
+				'position' => 'side',
+				'style' => 'default',
+				'label_placement' => 'top',
+				'instruction_placement' => 'field',
+				'hide_on_screen' => '',
+				'active' => true,
+				'description' => __('Information about the session date and time.', 'bm-event'),
+			]);
+		}
 
 		acf_add_local_field_group( [
 			'key'                   => 'group_5ecd0e94b7e60',

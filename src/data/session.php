@@ -370,4 +370,8 @@ class Session extends Data {
 		return $return;
 	}
 
+	public static function get_current_or_next_session(){
+
+	}
+
 }

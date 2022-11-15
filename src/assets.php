@@ -39,6 +39,7 @@ class Assets {
 	 * Registers and enqueues public stylesheets.
 	 **/
 	public static function public_styles() {
+		global $post;
 
 		// We may optionally set a filter to disable public CSS.
 		// For example, if we want to bring in the styles in a theme.
@@ -57,6 +58,10 @@ class Assets {
 		 */
 		if ( self::has_blocks() ) {
 			wp_enqueue_style( 'bm-event-public' );
+			wp_enqueue_style( 'select2' );
+		}
+
+		if(has_shortcode($post->post_content, 'bm_display_events')) {
 			wp_enqueue_style( 'select2' );
 		}
 	}
@@ -102,6 +107,7 @@ class Assets {
 	 * for testing purposes.
 	 **/
 	public static function public_scripts() {
+		global $post;
 
 		/**
 		 * Register the main, minified
@@ -109,6 +115,8 @@ class Assets {
 		 */
 		wp_register_script( 'bm-event-app', Plugin::get_assets_url() . '/scripts/dist/app.js', [ 'jquery', 'select2' ], Plugin::get_version(), true );
 		wp_register_script( 'select2', 'https://cdn.jsdelivr.net/npm/select2@4.0.0/dist/js/select2.min.js', [ 'jquery' ], '4.0.0', true );
+		wp_register_script('liveviewer', Plugin::get_assets_url('/scripts/dist/live-viewer.js'), [], Plugin::get_version(), true);
+		wp_register_script('time-switcher', Plugin::get_assets_url('/scripts/dist/time-switcher.js'), [], Plugin::get_version(), true);
 
 		/**
 		 * Only load if we have the right blocks.
@@ -129,6 +137,23 @@ class Assets {
 
 		}
 
+		if(has_shortcode($post->post_content, 'bm_liveviewer')) {
+			wp_enqueue_script( 'liveviewer' );
+
+			wp_localize_script('liveviewer', 'BMELiveViewer', [
+				'apiUrl' => rest_url('bm-events/v1'),
+				'pollingInterval' => 30000
+			]);
+		}
+
+		if(has_shortcode($post->post_content, 'bm_display_events')) {
+			wp_enqueue_script( 'select2' );
+			wp_enqueue_script( 'time-switcher' );
+
+			wp_localize_script('time-switcher', 'BMETimeSwitcher', [
+				'apiUrl' => rest_url('bm-events/v1')
+			]);
+		}
 	}
 
 	/**
