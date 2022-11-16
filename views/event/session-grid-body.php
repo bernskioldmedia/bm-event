@@ -58,15 +58,16 @@ foreach($sessions as $session_obj) : $session = new Session( $session_obj->ID );
 			<?php endif; ?>
 		</div>
 
+
 		<?php if( $session->get_start_date_from_datetime( 'U' ) < date('U')) : ?>
 			<div class="session-grid-item-actions">
 				<a href="<?php echo esc_url( get_the_permalink($session_obj->ID) ); ?>" class="session-grid-item-action">
 					<?php esc_html_e( 'Watch Now', 'bm-event' ); ?> ›
 				</a>
 			</div>
-		<?php elseif( $registration_url ) : ?>
+		<?php elseif( get_theme_mod('bm_event_registration_url') ) : ?>
 			<div class="session-grid-item-actions">
-				<a href="<?php echo esc_url( $registration_url ); ?>" class="session-grid-item-action">
+				<a href="<?php echo esc_url( get_theme_mod('bm_event_registration_url') ); ?>" class="session-grid-item-action">
 					<?php esc_html_e( 'Register Now', 'bm-event' ); ?> ›
 				</a>
 			</div>

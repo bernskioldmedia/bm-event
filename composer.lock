@@ -8,20 +8,20 @@
     "packages": [
         {
             "name": "bernskioldmedia/block-plugin-support",
-            "version": "1.4.3",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/bernskioldmedia/Block-Plugin-Support.git",
-                "reference": "b271288625e12a66e46986a6d4ee55f837e14b27"
+                "reference": "a0f6f6136abd6973e4741cb35e5bf3ba4f39573a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/bernskioldmedia/Block-Plugin-Support/zipball/b271288625e12a66e46986a6d4ee55f837e14b27",
-                "reference": "b271288625e12a66e46986a6d4ee55f837e14b27",
+                "url": "https://api.github.com/repos/bernskioldmedia/Block-Plugin-Support/zipball/a0f6f6136abd6973e4741cb35e5bf3ba4f39573a",
+                "reference": "a0f6f6136abd6973e4741cb35e5bf3ba4f39573a",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.1|^8.0"
+                "php": "^7.4|^8.0"
             },
             "type": "library",
             "autoload": {
@@ -46,9 +46,9 @@
             "description": "A reusable way of adding block support to a WordPress plugin.",
             "support": {
                 "issues": "https://github.com/bernskioldmedia/Block-Plugin-Support/issues",
-                "source": "https://github.com/bernskioldmedia/Block-Plugin-Support/tree/1.4.3"
+                "source": "https://github.com/bernskioldmedia/Block-Plugin-Support/tree/1.4.4"
             },
-            "time": "2021-05-30T14:24:42+00:00"
+            "time": "2021-07-17T15:40:41+00:00"
         },
         {
             "name": "bernskioldmedia/wp-plugin-base",
@@ -100,16 +100,16 @@
         },
         {
             "name": "composer/installers",
-            "version": "v1.11.0",
+            "version": "v1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "ae03311f45dfe194412081526be2e003960df74b"
+                "reference": "d20a64ed3c94748397ff5973488761b22f6d3f19"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/ae03311f45dfe194412081526be2e003960df74b",
-                "reference": "ae03311f45dfe194412081526be2e003960df74b",
+                "url": "https://api.github.com/repos/composer/installers/zipball/d20a64ed3c94748397ff5973488761b22f6d3f19",
+                "reference": "d20a64ed3c94748397ff5973488761b22f6d3f19",
                 "shasum": ""
             },
             "require": {
@@ -208,6 +208,7 @@
                 "modx",
                 "moodle",
                 "osclass",
+                "pantheon",
                 "phpbb",
                 "piwik",
                 "ppi",
@@ -230,7 +231,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/installers/issues",
-                "source": "https://github.com/composer/installers/tree/v1.11.0"
+                "source": "https://github.com/composer/installers/tree/v1.12.0"
             },
             "funding": [
                 {
@@ -246,20 +247,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-04-28T06:42:17+00:00"
+            "time": "2021-09-13T08:19:44+00:00"
         },
         {
             "name": "monolog/monolog",
-            "version": "1.26.1",
+            "version": "1.27.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "c6b00f05152ae2c9b04a448f99c7590beb6042f5"
+                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/c6b00f05152ae2c9b04a448f99c7590beb6042f5",
-                "reference": "c6b00f05152ae2c9b04a448f99c7590beb6042f5",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/904713c5929655dc9b97288b69cfeedad610c9a1",
+                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1",
                 "shasum": ""
             },
             "require": {
@@ -320,7 +321,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/1.26.1"
+                "source": "https://github.com/Seldaek/monolog/tree/1.27.1"
             },
             "funding": [
                 {
@@ -332,7 +333,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2021-05-28T08:32:12+00:00"
+            "time": "2022-06-09T08:53:42+00:00"
         },
         {
             "name": "psr/log",
@@ -395,5 +396,5 @@
         "php": ">=7.4|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }

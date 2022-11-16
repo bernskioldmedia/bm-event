@@ -15,15 +15,11 @@ class Shortcodes
 		add_shortcode('bm_liveviewer', [self::class, 'liveviewer']);
 	}
 
-	public static function display_events($atts)
+	public static function display_events()
 	{
-		$attributes = shortcode_atts([
-			'registration_url' => false,
-		], $atts);
-
 		ob_start();
 
-		Plugin::load_template('event/session-grid', $attributes);
+		Plugin::load_template('event/session-grid');
 		return ob_get_clean();
 	}
 

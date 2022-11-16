@@ -19,7 +19,7 @@ class Track_Timetable_Block extends Block {
 	 *
 	 * @var array
 	 */
-	protected static $attributes = [
+	protected static array $attributes = [
 		'track_id'             => [
 			'type'    => 'number',
 			'default' => 0,
@@ -80,7 +80,7 @@ class Track_Timetable_Block extends Block {
 	 *
 	 * @return false|string
 	 */
-	public static function render( $attributes ) {
+	public static function render( array $attributes ): string {
 
 		$posts = self::get_query( $attributes );
 

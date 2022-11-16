@@ -3,8 +3,6 @@
 namespace BernskioldMedia\WP\Event\Rest;
 
 use BernskioldMedia\WP\Event\Plugin;
-use BernskioldMedia\WP\Event\Queries;
-use BernskioldMedia\WP\Event\SessionHelper;
 use BernskioldMedia\WP\PluginBase\Rest\RestEndpoint;
 use WP_REST_Response;
 

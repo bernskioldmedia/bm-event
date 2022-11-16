@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file. This projec
 
 ## [Unreleased]
 
+## [1.2.4] - 2022-11-14
+### Added
+- Add customizer setting for the registration URL
+
+### Changed
+- Use the theme mod setting for the registration URL instead of shortcode setting, this to make the timezone switcher work
+
+### Removed
+- Removed shortcode setting for registration URL
+
 ## [1.2.3] - 2022-11-14
 ### Added
 - Added timezone switcher

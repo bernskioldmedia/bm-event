@@ -28,7 +28,7 @@ class Plugin extends Base_Plugin {
 	 *
 	 * @var string
 	 */
-	protected static $version = '1.2.3';
+	protected static $version = '1.2.4';
 
 	/**
 	 * Database Version
@@ -69,6 +69,8 @@ class Plugin extends Base_Plugin {
 		Track::class,
 	];
 
+	protected static string $block_prefix = 'bm';
+
 	/**
 	 * Constructor
 	 */
@@ -78,6 +80,7 @@ class Plugin extends Base_Plugin {
 		$this->init_hooks();
 		$this->load_blocks( 'bm' );
 		$this->boot_data_stores();
+		$this->classes();
 
 		do_action( 'bm_event_loaded' );
 
@@ -97,6 +100,10 @@ class Plugin extends Base_Plugin {
 		(new SessionGrid())->load();
 
 		do_action( 'bm_event_init' );
+	}
+
+	public function classes() {
+		require_once 'customizer.php';
 	}
 
 	/**
@@ -120,7 +127,7 @@ class Plugin extends Base_Plugin {
 	 *
 	 * @return mixed
 	 */
-	public function blocks() {
+	public function blocks(): void {
 
 		$this->add_block( 'track-timetable', [
 			'render_callback' => [ Track_Timetable_Block::class, 'render' ],
